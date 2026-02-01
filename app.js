@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize scroll reveal
     initScrollReveal();
 
+    // Initialize timeline progress
+    initTimelineProgress();
+
     // Handle form submission
     const form = document.getElementById('loadcheck-form');
     if (form) {
@@ -148,6 +151,32 @@ function initScrollReveal() {
     }, { threshold: 0.1 });
 
     reveals.forEach(el => observer.observe(el));
+}
+
+// Timeline progress animation
+function initTimelineProgress() {
+    const progress = document.getElementById('timeline-progress');
+    const timeline = document.querySelector('.nano-timeline');
+    if (!progress || !timeline) return;
+
+    const updateProgress = () => {
+        const timelineRect = timeline.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Calculate how much of the timeline is visible
+        const timelineTop = timelineRect.top;
+        const timelineHeight = timelineRect.height;
+        
+        // Start progress when timeline enters viewport
+        if (timelineTop < windowHeight && timelineTop + timelineHeight > 0) {
+            const visibleStart = Math.max(0, windowHeight - timelineTop);
+            const visiblePortion = Math.min(visibleStart / timelineHeight, 1);
+            progress.style.height = (visiblePortion * 100) + '%';
+        }
+    };
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress(); // Initial call
 }
 
 // Cursor glow effect
