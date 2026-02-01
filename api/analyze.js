@@ -19,14 +19,16 @@ function analyzeWorkload(data) {
     const totalHours = subjects.reduce((sum, s) => sum + (s.hours_per_week || 0), 0);
     scores.homework = Math.min(totalHours * weights.homework, 30);
 
-    // Exam stress
-    const exams = data.exams || [];
+    // Exam stress - support both 'exams' and 'upcoming_exams' field names
+    const exams = data.upcoming_exams || data.exams || [];
     for (const exam of exams) {
         try {
             const examDate = new Date(exam.date);
             const daysUntil = Math.floor((examDate - today) / (1000 * 60 * 60 * 24));
             if (daysUntil >= 0 && daysUntil <= 14) {
-                const diff = { easy: 0.5, medium: 1.0, hard: 1.5 }[exam.difficulty] || 1.0;
+                // Support both 'difficulty' and 'type' fields
+                const diffValue = exam.difficulty || exam.type || 'medium';
+                const diff = { easy: 0.5, quiz: 0.5, medium: 1.0, midterm: 1.0, hard: 1.5, final: 1.5 }[diffValue] || 1.0;
                 const urgency = Math.max(0, (14 - daysUntil) / 14);
                 scores.exams += urgency * weights.exams * diff * 5;
             }
@@ -58,7 +60,8 @@ function analyzeWorkload(data) {
 
     // Deadline clustering
     const allDeadlines = [];
-    exams.forEach(e => { try { allDeadlines.push(new Date(e.date)); } catch (err) { } });
+    const examsForDeadlines = data.upcoming_exams || data.exams || [];
+    examsForDeadlines.forEach(e => { try { allDeadlines.push(new Date(e.date)); } catch (err) { } });
     projects.forEach(p => { try { allDeadlines.push(new Date(p.deadline)); } catch (err) { } });
     allDeadlines.sort((a, b) => a - b);
 
@@ -118,9 +121,10 @@ async function getAIRecommendation(analysis, userData) {
     if (!process.env.GROQ_API_KEY) return "Configure GROQ_API_KEY for AI recommendations.";
 
     try {
+        const examsCount = (userData.upcoming_exams || userData.exams || []).length;
         const prompt = `You are a supportive academic wellness advisor. Student situation:
 Risk: ${analysis.risk_level.toUpperCase()} (${analysis.score}/100)
-Sleep: ${userData.sleep_hours || "?"}h, Subjects: ${(userData.subjects || []).length}, Exams: ${(userData.exams || []).length}, Projects: ${(userData.projects || []).length}
+Sleep: ${userData.sleep_hours || "?"}h, Subjects: ${(userData.subjects || []).length}, Exams: ${examsCount}, Projects: ${(userData.projects || []).length}
 Stress factors: ${analysis.causes.slice(0, 3).join(", ")}
 
 Give ONE specific tip (2-3 sentences). Be warm. Include one emoji.`;
