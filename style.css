@@ -1583,13 +1583,14 @@ input[type="range"]::-webkit-slider-thumb:hover {
     max-width: 900px;
     margin: 0 auto;
     padding: 60px 0;
+    padding-left: 60px;
 }
 
 .nano-timeline-track {
     position: absolute;
-    left: 52px;
-    top: 0;
-    bottom: 0;
+    left: 113px;
+    top: 60px;
+    bottom: 60px;
     width: 4px;
     background: var(--bg-tertiary);
     border-radius: var(--radius-full);
@@ -1611,21 +1612,10 @@ input[type="range"]::-webkit-slider-thumb:hover {
     gap: 40px;
     margin-bottom: 60px;
     position: relative;
-    opacity: 0;
-    transform: translateX(-30px);
-    animation: timeline-slide-in 0.6s ease forwards;
 }
 
-.nano-timeline-item:nth-child(2) { animation-delay: 0.2s; }
-.nano-timeline-item:nth-child(3) { animation-delay: 0.4s; }
-.nano-timeline-item:nth-child(4) { animation-delay: 0.6s; }
-.nano-timeline-item:nth-child(5) { animation-delay: 0.8s; }
-
-@keyframes timeline-slide-in {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.nano-timeline-item:last-child {
+    margin-bottom: 0;
 }
 
 .nano-step-number {
@@ -1680,9 +1670,19 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 @keyframes step-pulse-anim {
-    0% { transform: scale(0.8); opacity: 0; }
-    50% { opacity: 0.5; }
-    100% { transform: scale(1.4); opacity: 0; }
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1.4);
+        opacity: 0;
+    }
 }
 
 .nano-step-content {
@@ -1729,8 +1729,15 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 @keyframes icon-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
 }
 
 .nano-step-content h3 {
@@ -1806,32 +1813,36 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 /* Responsive Timeline */
 @media (max-width: 768px) {
-    .nano-timeline-track {
-        left: 30px;
+    .nano-timeline {
+        padding-left: 20px;
     }
     
+    .nano-timeline-track {
+        left: 50px;
+    }
+
     .nano-step-number {
         width: 60px;
         height: 60px;
         min-width: 60px;
     }
-    
+
     .nano-step-number span {
         font-size: 1.5rem;
     }
-    
+
     .nano-timeline-item {
         gap: 20px;
     }
-    
+
     .nano-step-content {
         padding: 20px;
     }
-    
+
     .nano-step-icon {
         font-size: 2rem;
     }
-    
+
     .nano-step-content h3 {
         font-size: 1.2rem;
     }
@@ -2081,8 +2092,16 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 @keyframes cursor-blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
 }
 
 /* Marquee Banner */

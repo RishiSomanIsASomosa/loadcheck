@@ -162,11 +162,11 @@ function initTimelineProgress() {
     const updateProgress = () => {
         const timelineRect = timeline.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-        
+
         // Calculate how much of the timeline is visible
         const timelineTop = timelineRect.top;
         const timelineHeight = timelineRect.height;
-        
+
         // Start progress when timeline enters viewport
         if (timelineTop < windowHeight && timelineTop + timelineHeight > 0) {
             const visibleStart = Math.max(0, windowHeight - timelineTop);
