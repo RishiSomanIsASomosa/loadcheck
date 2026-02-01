@@ -21,18 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize sleep slider
     initSleepSlider();
 
-    // Initialize typewriter effect
-    initTypewriter();
-
-    // Initialize tilt cards
-    initTiltCards();
-
-    // Initialize magnetic buttons
-    initMagneticButtons();
-
-    // Initialize scroll reveal
-    initScrollReveal();
-
     // Handle form submission
     const form = document.getElementById('loadcheck-form');
     if (form) {
@@ -42,113 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
-// Typewriter effect
-function initTypewriter() {
-    const element = document.getElementById('typewriter');
-    if (!element) return;
-
-    const words = ['One Check at a Time', 'Before It Starts', 'With AI Power', 'Smart & Simple'];
-    let wordIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
-    let typeSpeed = 100;
-
-    function type() {
-        const currentWord = words[wordIndex];
-
-        if (isDeleting) {
-            element.textContent = currentWord.substring(0, charIndex - 1);
-            charIndex--;
-            typeSpeed = 50;
-        } else {
-            element.textContent = currentWord.substring(0, charIndex + 1);
-            charIndex++;
-            typeSpeed = 100;
-        }
-
-        if (!isDeleting && charIndex === currentWord.length) {
-            typeSpeed = 2000; // Pause at end
-            isDeleting = true;
-        } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            wordIndex = (wordIndex + 1) % words.length;
-            typeSpeed = 500; // Pause before new word
-        }
-
-        setTimeout(type, typeSpeed);
-    }
-
-    type();
-}
-
-// Tilt card effect
-function initTiltCards() {
-    const cards = document.querySelectorAll('.tilt-card');
-
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-
-            // Move the shine effect
-            const shine = card.querySelector('.card-shine');
-            if (shine) {
-                shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.2), transparent 80%)`;
-                shine.style.opacity = '1';
-            }
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-            const shine = card.querySelector('.card-shine');
-            if (shine) {
-                shine.style.opacity = '0';
-            }
-        });
-    });
-}
-
-// Magnetic button effect
-function initMagneticButtons() {
-    const buttons = document.querySelectorAll('.magnetic-btn');
-
-    buttons.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-
-            btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
-        });
-
-        btn.addEventListener('mouseleave', () => {
-            btn.style.transform = 'translate(0, 0)';
-        });
-    });
-}
-
-// Scroll reveal animation
-function initScrollReveal() {
-    const reveals = document.querySelectorAll('.reveal, .stagger-children');
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('active');
-            }
-        });
-    }, { threshold: 0.1 });
-
-    reveals.forEach(el => observer.observe(el));
-}
 
 // Cursor glow effect
 function initCursorGlow() {
