@@ -152,9 +152,20 @@ module.exports = async (req, res) => {
         const analysis = analyzeWorkload(data);
         const aiMessage = await getAIRecommendation(analysis, data);
 
+        // Return in format frontend expects
         return res.status(200).json({
             success: true,
-            analysis: { ...analysis, ai_message: aiMessage },
+            risk_score: analysis.score,
+            risk_level: analysis.risk_level,
+            breakdown: {
+                sleep: Math.round(analysis.breakdown.sleep_deficit * 5),
+                study: Math.round(analysis.breakdown.homework * 3.3),
+                exams: Math.round(analysis.breakdown.exams * 3.3),
+                projects: Math.round(analysis.breakdown.projects * 4)
+            },
+            causes: analysis.causes,
+            recommendations: analysis.recommendations,
+            ai_recommendation: aiMessage
         });
     } catch (e) {
         return res.status(500).json({ error: e.message });

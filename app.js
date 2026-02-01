@@ -11,16 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize cursor glow
     initCursorGlow();
-    
+
     // Initialize particles
     initParticles();
-    
+
     // Animate counters on landing page
     animateCounters();
-    
+
     // Initialize sleep slider
     initSleepSlider();
-    
+
     // Handle form submission
     const form = document.getElementById('loadcheck-form');
     if (form) {
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initCursorGlow() {
     const glow = document.querySelector('.cursor-glow');
     if (!glow) return;
-    
+
     document.addEventListener('mousemove', (e) => {
         requestAnimationFrame(() => {
             glow.style.left = e.clientX + 'px';
@@ -48,7 +48,7 @@ function initCursorGlow() {
 function initParticles() {
     const container = document.querySelector('.particles');
     if (!container) return;
-    
+
     for (let i = 0; i < 30; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
@@ -66,7 +66,7 @@ function animateCounters() {
     counters.forEach(counter => {
         const target = parseInt(counter.getAttribute('data-target')) || 0;
         if (target === 0) return;
-        
+
         let current = 0;
         const increment = target / 60;
         const timer = setInterval(() => {
@@ -86,7 +86,7 @@ function initSleepSlider() {
     const slider = document.getElementById('sleep-range');
     const display = document.getElementById('sleep-display');
     if (!slider || !display) return;
-    
+
     slider.addEventListener('input', () => {
         display.textContent = slider.value;
     });
@@ -126,7 +126,7 @@ function addSubject() {
     const container = document.getElementById('subjects-container');
     const empty = container.querySelector('.empty-state');
     if (empty) empty.remove();
-    
+
     const id = Date.now();
     const div = document.createElement('div');
     div.className = 'form-item';
@@ -150,7 +150,7 @@ function addExam() {
     const container = document.getElementById('exams-container');
     const empty = container.querySelector('.empty-state');
     if (empty) empty.remove();
-    
+
     const id = Date.now();
     const div = document.createElement('div');
     div.className = 'form-item';
@@ -174,7 +174,7 @@ function addProject() {
     const container = document.getElementById('projects-container');
     const empty = container.querySelector('.empty-state');
     if (empty) empty.remove();
-    
+
     const id = Date.now();
     const div = document.createElement('div');
     div.className = 'form-item';
@@ -193,7 +193,7 @@ function addProject() {
 function removeItem(id, type) {
     const item = document.getElementById(id);
     if (item) item.remove();
-    
+
     const container = document.getElementById(`${type}-container`);
     if (container && container.children.length === 0) {
         const icons = {
@@ -213,7 +213,7 @@ function removeItem(id, type) {
 // Collect form data
 function collectFormData() {
     const sleepHours = parseInt(document.getElementById('sleep-range').value) || 7;
-    
+
     const subjects = [];
     document.querySelectorAll('#subjects-container .form-item').forEach(item => {
         const inputs = item.querySelectorAll('input, select');
@@ -226,7 +226,7 @@ function collectFormData() {
             });
         }
     });
-    
+
     const exams = [];
     document.querySelectorAll('#exams-container .form-item').forEach(item => {
         const inputs = item.querySelectorAll('input, select');
@@ -239,7 +239,7 @@ function collectFormData() {
             });
         }
     });
-    
+
     const projects = [];
     document.querySelectorAll('#projects-container .form-item').forEach(item => {
         const inputs = item.querySelectorAll('input');
@@ -252,7 +252,7 @@ function collectFormData() {
             });
         }
     });
-    
+
     return {
         sleep_hours: sleepHours,
         subjects,
@@ -264,29 +264,29 @@ function collectFormData() {
 // Analyze workload
 async function analyzeWorkload() {
     const data = collectFormData();
-    
+
     // Validate
     if (data.subjects.length === 0 && data.upcoming_exams.length === 0 && data.projects.length === 0) {
         alert('Please add at least one subject, exam, or project.');
         return;
     }
-    
+
     // Show loading
     document.getElementById('loading').classList.remove('hidden');
-    
+
     try {
         const response = await fetch('/api/analyze', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
-        
+
         const result = await response.json();
-        
+
         if (result.error) {
             throw new Error(result.error);
         }
-        
+
         displayResults(result);
         showResults();
     } catch (err) {
@@ -300,25 +300,25 @@ async function analyzeWorkload() {
 function displayResults(result) {
     const score = result.risk_score;
     const level = result.risk_level;
-    
+
     // Update score
     document.getElementById('risk-score').textContent = score;
-    
+
     // Update circle
     const progress = document.getElementById('risk-progress');
     const circumference = 534;
     const offset = circumference - (score / 100) * circumference;
     progress.style.strokeDashoffset = offset;
-    
+
     // Set color based on level
     let color;
     if (level === 'low') color = '#10b981';
     else if (level === 'medium') color = '#f59e0b';
     else color = '#ef4444';
-    
+
     progress.style.stroke = color;
     document.getElementById('risk-score').style.color = color;
-    
+
     // Update emoji and badge
     const emojis = { low: '😊', medium: '😐', high: '😰' };
     const labels = { low: 'Low Risk', medium: 'Medium Risk', high: 'High Risk' };
@@ -327,31 +327,31 @@ function displayResults(result) {
         medium: 'Watch out! Your workload is getting heavy.',
         high: 'Take action! You\'re at risk of burnout.'
     };
-    
+
     document.getElementById('risk-emoji').textContent = emojis[level];
-    
+
     const badge = document.getElementById('risk-badge');
     badge.textContent = labels[level];
     badge.className = 'risk-badge ' + level;
-    
+
     document.getElementById('risk-label').textContent = labels[level];
     document.getElementById('risk-summary').textContent = summaries[level];
-    
+
     // AI recommendation
     document.getElementById('ai-message').textContent = result.ai_recommendation || 'Keep up the good work!';
-    
+
     // Breakdown chart
     const breakdown = result.breakdown || {};
     const chart = document.getElementById('breakdown-chart');
     chart.innerHTML = '';
-    
+
     const breakdownItems = [
         { key: 'sleep', label: 'Sleep Score', color: '#6366f1' },
         { key: 'study', label: 'Study Load', color: '#f59e0b' },
         { key: 'exams', label: 'Exam Stress', color: '#ef4444' },
         { key: 'projects', label: 'Project Load', color: '#10b981' }
     ];
-    
+
     breakdownItems.forEach(item => {
         const value = breakdown[item.key] || 0;
         const div = document.createElement('div');
@@ -364,13 +364,13 @@ function displayResults(result) {
             <span class="breakdown-value">${value}%</span>
         `;
         chart.appendChild(div);
-        
+
         // Animate the bar
         setTimeout(() => {
             div.querySelector('.breakdown-fill').style.width = value + '%';
         }, 100);
     });
-    
+
     // Causes
     const causesList = document.getElementById('causes-list');
     causesList.innerHTML = '';
@@ -379,7 +379,7 @@ function displayResults(result) {
         li.textContent = cause;
         causesList.appendChild(li);
     });
-    
+
     // Recommendations
     const recList = document.getElementById('recommendations-list');
     recList.innerHTML = '';
@@ -394,7 +394,7 @@ function displayResults(result) {
 function resetForm() {
     document.getElementById('sleep-range').value = 7;
     document.getElementById('sleep-display').textContent = '7';
-    
+
     ['subjects', 'exams', 'projects'].forEach(type => {
         const container = document.getElementById(`${type}-container`);
         const icons = {
@@ -409,6 +409,6 @@ function resetForm() {
             </div>
         `;
     });
-    
+
     showInput();
 }
