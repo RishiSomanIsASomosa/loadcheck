@@ -1,16 +1,109 @@
-// LoadCheck - Frontend JavaScript
+// LoadCheck - Premium Animated JavaScript
 
-// Navigation
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        easing: 'ease-out',
+        once: true,
+        offset: 100
+    });
+
+    // Initialize cursor glow
+    initCursorGlow();
+    
+    // Initialize particles
+    initParticles();
+    
+    // Animate counters on landing page
+    animateCounters();
+    
+    // Initialize sleep slider
+    initSleepSlider();
+    
+    // Handle form submission
+    const form = document.getElementById('loadcheck-form');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            analyzeWorkload();
+        });
+    }
+});
+
+// Cursor glow effect
+function initCursorGlow() {
+    const glow = document.querySelector('.cursor-glow');
+    if (!glow) return;
+    
+    document.addEventListener('mousemove', (e) => {
+        requestAnimationFrame(() => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+    });
+}
+
+// Particle background
+function initParticles() {
+    const container = document.querySelector('.particles');
+    if (!container) return;
+    
+    for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 15 + 's';
+        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        container.appendChild(particle);
+    }
+}
+
+// Animate stat counters
+function animateCounters() {
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target')) || 0;
+        if (target === 0) return;
+        
+        let current = 0;
+        const increment = target / 60;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                counter.textContent = target.toLocaleString();
+                clearInterval(timer);
+            } else {
+                counter.textContent = Math.floor(current).toLocaleString();
+            }
+        }, 30);
+    });
+}
+
+// Sleep slider
+function initSleepSlider() {
+    const slider = document.getElementById('sleep-range');
+    const display = document.getElementById('sleep-display');
+    if (!slider || !display) return;
+    
+    slider.addEventListener('input', () => {
+        display.textContent = slider.value;
+    });
+}
+
+// Navigation functions
 function showLanding() {
     document.getElementById('landing-page').classList.remove('hidden');
     document.getElementById('app-page').classList.add('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showApp() {
     document.getElementById('landing-page').classList.add('hidden');
     document.getElementById('app-page').classList.remove('hidden');
-    document.getElementById('input-section').classList.remove('hidden');
-    document.getElementById('results-section').classList.add('hidden');
+    showInput();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showInput() {
@@ -23,239 +116,299 @@ function showResults() {
     document.getElementById('results-section').classList.remove('hidden');
 }
 
-// Sleep slider
-const sleepRange = document.getElementById('sleep-range');
-const sleepDisplay = document.getElementById('sleep-display');
-
-if (sleepRange && sleepDisplay) {
-    sleepRange.addEventListener('input', () => {
-        sleepDisplay.textContent = sleepRange.value;
-    });
+function scrollToSection(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Add Subject
+// Add form items
 function addSubject() {
     const container = document.getElementById('subjects-container');
     const empty = container.querySelector('.empty-state');
     if (empty) empty.remove();
-
+    
+    const id = Date.now();
     const div = document.createElement('div');
     div.className = 'form-item';
+    div.id = `subject-${id}`;
     div.innerHTML = `
-        <input type="text" placeholder="Subject name" class="subject-name" required>
-        <input type="number" placeholder="Hours/week" class="subject-hours" min="0" max="40" required>
-        <button type="button" class="btn-remove" onclick="this.parentElement.remove()">
-            <i class="fas fa-times"></i>
-        </button>
-    `;
-    container.appendChild(div);
-}
-
-// Add Exam
-function addExam() {
-    const container = document.getElementById('exams-container');
-    const empty = container.querySelector('.empty-state');
-    if (empty) empty.remove();
-
-    const div = document.createElement('div');
-    div.className = 'form-item';
-    div.innerHTML = `
-        <input type="text" placeholder="Exam name" class="exam-name" required>
-        <input type="date" class="exam-date" required>
-        <select class="exam-difficulty">
+        <input type="text" placeholder="Subject name (e.g., Calculus)">
+        <select>
             <option value="easy">Easy</option>
             <option value="medium" selected>Medium</option>
             <option value="hard">Hard</option>
         </select>
-        <button type="button" class="btn-remove" onclick="this.parentElement.remove()">
+        <input type="number" placeholder="Hours/week" min="1" max="40">
+        <button class="btn-remove" onclick="removeItem('subject-${id}', 'subjects')">
             <i class="fas fa-times"></i>
         </button>
     `;
     container.appendChild(div);
 }
 
-// Add Project
+function addExam() {
+    const container = document.getElementById('exams-container');
+    const empty = container.querySelector('.empty-state');
+    if (empty) empty.remove();
+    
+    const id = Date.now();
+    const div = document.createElement('div');
+    div.className = 'form-item';
+    div.id = `exam-${id}`;
+    div.innerHTML = `
+        <input type="text" placeholder="Exam name">
+        <input type="date">
+        <select>
+            <option value="quiz">Quiz</option>
+            <option value="midterm" selected>Midterm</option>
+            <option value="final">Final</option>
+        </select>
+        <button class="btn-remove" onclick="removeItem('exam-${id}', 'exams')">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    container.appendChild(div);
+}
+
 function addProject() {
     const container = document.getElementById('projects-container');
     const empty = container.querySelector('.empty-state');
     if (empty) empty.remove();
-
+    
+    const id = Date.now();
     const div = document.createElement('div');
     div.className = 'form-item';
+    div.id = `project-${id}`;
     div.innerHTML = `
-        <input type="text" placeholder="Project name" class="project-name" required>
-        <input type="date" class="project-deadline" required>
-        <select class="project-complexity">
-            <option value="low">Low</option>
-            <option value="medium" selected>Medium</option>
-            <option value="high">High</option>
-        </select>
-        <button type="button" class="btn-remove" onclick="this.parentElement.remove()">
+        <input type="text" placeholder="Project name">
+        <input type="date">
+        <input type="number" placeholder="Hours estimated" min="1" max="100">
+        <button class="btn-remove" onclick="removeItem('project-${id}', 'projects')">
             <i class="fas fa-times"></i>
         </button>
     `;
     container.appendChild(div);
 }
 
+function removeItem(id, type) {
+    const item = document.getElementById(id);
+    if (item) item.remove();
+    
+    const container = document.getElementById(`${type}-container`);
+    if (container && container.children.length === 0) {
+        const icons = {
+            subjects: 'fa-book-open',
+            exams: 'fa-file-alt',
+            projects: 'fa-project-diagram'
+        };
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas ${icons[type]}"></i>
+                <p>No ${type} added yet</p>
+            </div>
+        `;
+    }
+}
+
 // Collect form data
 function collectFormData() {
-    const sleepHours = parseFloat(document.getElementById('sleep-range').value);
-
+    const sleepHours = parseInt(document.getElementById('sleep-range').value) || 7;
+    
     const subjects = [];
     document.querySelectorAll('#subjects-container .form-item').forEach(item => {
-        const name = item.querySelector('.subject-name').value;
-        const hours = parseFloat(item.querySelector('.subject-hours').value) || 0;
-        if (name) subjects.push({ name, hours_per_week: hours });
+        const inputs = item.querySelectorAll('input, select');
+        const name = inputs[0].value.trim();
+        if (name) {
+            subjects.push({
+                name,
+                difficulty: inputs[1].value,
+                hours_per_week: parseInt(inputs[2].value) || 0
+            });
+        }
     });
-
+    
     const exams = [];
     document.querySelectorAll('#exams-container .form-item').forEach(item => {
-        const name = item.querySelector('.exam-name').value;
-        const date = item.querySelector('.exam-date').value;
-        const difficulty = item.querySelector('.exam-difficulty').value;
-        if (name && date) exams.push({ name, date, difficulty });
+        const inputs = item.querySelectorAll('input, select');
+        const name = inputs[0].value.trim();
+        if (name) {
+            exams.push({
+                name,
+                date: inputs[1].value,
+                type: inputs[2].value
+            });
+        }
     });
-
+    
     const projects = [];
     document.querySelectorAll('#projects-container .form-item').forEach(item => {
-        const name = item.querySelector('.project-name').value;
-        const deadline = item.querySelector('.project-deadline').value;
-        const complexity = item.querySelector('.project-complexity').value;
-        if (name && deadline) projects.push({ name, deadline, complexity });
+        const inputs = item.querySelectorAll('input');
+        const name = inputs[0].value.trim();
+        if (name) {
+            projects.push({
+                name,
+                deadline: inputs[1].value,
+                estimated_hours: parseInt(inputs[2].value) || 0
+            });
+        }
     });
+    
+    return {
+        sleep_hours: sleepHours,
+        subjects,
+        upcoming_exams: exams,
+        projects
+    };
+}
 
-    return { sleep_hours: sleepHours, subjects, exams, projects };
+// Analyze workload
+async function analyzeWorkload() {
+    const data = collectFormData();
+    
+    // Validate
+    if (data.subjects.length === 0 && data.upcoming_exams.length === 0 && data.projects.length === 0) {
+        alert('Please add at least one subject, exam, or project.');
+        return;
+    }
+    
+    // Show loading
+    document.getElementById('loading').classList.remove('hidden');
+    
+    try {
+        const response = await fetch('/api/analyze', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.error) {
+            throw new Error(result.error);
+        }
+        
+        displayResults(result);
+        showResults();
+    } catch (err) {
+        alert('Error analyzing workload: ' + err.message);
+    } finally {
+        document.getElementById('loading').classList.add('hidden');
+    }
 }
 
 // Display results
-function displayResults(data) {
-    const analysis = data.analysis;
-
-    // Score
-    const scoreEl = document.getElementById('risk-score');
-    const progressEl = document.getElementById('risk-progress');
-    const labelEl = document.getElementById('risk-label');
-    const badgeEl = document.getElementById('risk-badge');
-    const summaryEl = document.getElementById('risk-summary');
-
-    scoreEl.textContent = Math.round(analysis.score);
-
-    // Animate progress ring
-    const circumference = 283;
-    const offset = circumference - (analysis.score / 100) * circumference;
-    progressEl.style.strokeDashoffset = offset;
-
-    // Set colors based on risk
-    const colors = { low: '#10b981', medium: '#f59e0b', high: '#ef4444' };
-    const color = colors[analysis.risk_level];
-    progressEl.style.stroke = color;
-    scoreEl.style.color = color;
-
-    // Badge
-    badgeEl.textContent = analysis.risk_level.toUpperCase() + ' RISK';
-    badgeEl.className = 'risk-badge ' + analysis.risk_level;
-
-    // Label
-    const labels = {
-        low: 'Looking Good!',
-        medium: 'Moderate Stress',
-        high: 'High Burnout Risk'
-    };
-    labelEl.textContent = labels[analysis.risk_level];
-
-    // Summary
+function displayResults(result) {
+    const score = result.risk_score;
+    const level = result.risk_level;
+    
+    // Update score
+    document.getElementById('risk-score').textContent = score;
+    
+    // Update circle
+    const progress = document.getElementById('risk-progress');
+    const circumference = 534;
+    const offset = circumference - (score / 100) * circumference;
+    progress.style.strokeDashoffset = offset;
+    
+    // Set color based on level
+    let color;
+    if (level === 'low') color = '#10b981';
+    else if (level === 'medium') color = '#f59e0b';
+    else color = '#ef4444';
+    
+    progress.style.stroke = color;
+    document.getElementById('risk-score').style.color = color;
+    
+    // Update emoji and badge
+    const emojis = { low: '😊', medium: '😐', high: '😰' };
+    const labels = { low: 'Low Risk', medium: 'Medium Risk', high: 'High Risk' };
     const summaries = {
-        low: "Your workload is manageable. Keep maintaining this balance!",
-        medium: "Some stress detected. Consider adjusting your schedule.",
-        high: "High burnout risk! Take steps to reduce your workload."
+        low: 'Great balance! You\'re managing your workload well.',
+        medium: 'Watch out! Your workload is getting heavy.',
+        high: 'Take action! You\'re at risk of burnout.'
     };
-    summaryEl.textContent = summaries[analysis.risk_level];
+    
+    document.getElementById('risk-emoji').textContent = emojis[level];
+    
+    const badge = document.getElementById('risk-badge');
+    badge.textContent = labels[level];
+    badge.className = 'risk-badge ' + level;
+    
+    document.getElementById('risk-label').textContent = labels[level];
+    document.getElementById('risk-summary').textContent = summaries[level];
+    
+    // AI recommendation
+    document.getElementById('ai-message').textContent = result.ai_recommendation || 'Keep up the good work!';
+    
+    // Breakdown chart
+    const breakdown = result.breakdown || {};
+    const chart = document.getElementById('breakdown-chart');
+    chart.innerHTML = '';
+    
+    const breakdownItems = [
+        { key: 'sleep', label: 'Sleep Score', color: '#6366f1' },
+        { key: 'study', label: 'Study Load', color: '#f59e0b' },
+        { key: 'exams', label: 'Exam Stress', color: '#ef4444' },
+        { key: 'projects', label: 'Project Load', color: '#10b981' }
+    ];
+    
+    breakdownItems.forEach(item => {
+        const value = breakdown[item.key] || 0;
+        const div = document.createElement('div');
+        div.className = 'breakdown-item';
+        div.innerHTML = `
+            <span class="breakdown-label">${item.label}</span>
+            <div class="breakdown-bar">
+                <div class="breakdown-fill" style="width: 0; background: ${item.color};"></div>
+            </div>
+            <span class="breakdown-value">${value}%</span>
+        `;
+        chart.appendChild(div);
+        
+        // Animate the bar
+        setTimeout(() => {
+            div.querySelector('.breakdown-fill').style.width = value + '%';
+        }, 100);
+    });
+    
+    // Causes
+    const causesList = document.getElementById('causes-list');
+    causesList.innerHTML = '';
+    (result.causes || []).forEach(cause => {
+        const li = document.createElement('li');
+        li.textContent = cause;
+        causesList.appendChild(li);
+    });
+    
+    // Recommendations
+    const recList = document.getElementById('recommendations-list');
+    recList.innerHTML = '';
+    (result.recommendations || []).forEach(rec => {
+        const li = document.createElement('li');
+        li.textContent = rec;
+        recList.appendChild(li);
+    });
+}
 
-    // AI Message
-    document.getElementById('ai-message').textContent = analysis.ai_message;
-
-    // Breakdown
-    const breakdownEl = document.getElementById('breakdown-chart');
-    breakdownEl.innerHTML = '';
-
-    const breakdownLabels = {
-        homework: 'Homework Load',
-        exams: 'Exam Stress',
-        projects: 'Project Load',
-        sleep_deficit: 'Sleep Deficit',
-        deadline_clustering: 'Deadline Clustering'
-    };
-
-    const maxScores = { homework: 30, exams: 30, projects: 25, sleep_deficit: 20, deadline_clustering: 15 };
-
-    Object.entries(analysis.breakdown).forEach(([key, value]) => {
-        const max = maxScores[key];
-        const percent = (value / max) * 100;
-        let barColor = '#6366f1';
-        if (percent > 70) barColor = '#ef4444';
-        else if (percent > 40) barColor = '#f59e0b';
-
-        breakdownEl.innerHTML += `
-            <div class="breakdown-item">
-                <span class="breakdown-label">${breakdownLabels[key]}</span>
-                <div class="breakdown-bar">
-                    <div class="breakdown-fill" style="width:${percent}%; background:${barColor}"></div>
-                </div>
-                <span class="breakdown-value">${value}</span>
+// Reset form
+function resetForm() {
+    document.getElementById('sleep-range').value = 7;
+    document.getElementById('sleep-display').textContent = '7';
+    
+    ['subjects', 'exams', 'projects'].forEach(type => {
+        const container = document.getElementById(`${type}-container`);
+        const icons = {
+            subjects: 'fa-book-open',
+            exams: 'fa-file-alt',
+            projects: 'fa-project-diagram'
+        };
+        container.innerHTML = `
+            <div class="empty-state">
+                <i class="fas ${icons[type]}"></i>
+                <p>No ${type} added yet</p>
             </div>
         `;
     });
-
-    // Causes
-    const causesEl = document.getElementById('causes-list');
-    causesEl.innerHTML = analysis.causes.map(c => `<li>${c}</li>`).join('');
-
-    // Recommendations
-    const recsEl = document.getElementById('recommendations-list');
-    recsEl.innerHTML = analysis.recommendations.map(r => `<li>${r}</li>`).join('');
-
-    showResults();
+    
+    showInput();
 }
-
-// Form submit
-const form = document.getElementById('loadcheck-form');
-if (form) {
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const formData = collectFormData();
-        const loading = document.getElementById('loading');
-
-        loading.classList.remove('hidden');
-
-        try {
-            const response = await fetch('/api/analyze', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                displayResults(data);
-            } else {
-                alert(data.error || 'Analysis failed');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Network error. Please try again.');
-        } finally {
-            loading.classList.add('hidden');
-        }
-    });
-}
-
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-    });
-});

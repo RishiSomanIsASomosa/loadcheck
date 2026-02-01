@@ -1,97 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoadCheck - AI Student Burnout Prevention</title>
-    <link rel="icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text y='50%' x='50%' font-size='60' text-anchor='middle' dominant-baseline='central'>🧠</text></svg>">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text y='50%' x='50%' font-size='60' text-anchor='middle' dominant-baseline='central'>🧠</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <div class="gradient-bg"></div>
+    <!-- Cursor Glow -->
+    <div class="cursor-glow" id="cursor-glow"></div>
+    
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
 
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#" class="logo" onclick="showLanding()">
-                <div class="logo-icon"><i class="fas fa-brain"></i></div>
+            <a href="#" class="nav-logo" onclick="showLanding()">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                    <div class="logo-pulse"></div>
+                </div>
                 <span>LoadCheck</span>
             </a>
             <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#how-it-works">How It Works</a>
-                <button class="btn btn-primary" onclick="showApp()">Get Started</button>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <button class="btn btn-primary btn-glow" onclick="showApp()">
+                    <span>Get Started</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Landing Page -->
     <main id="landing-page">
+        <!-- Hero Section -->
         <section class="hero">
-            <div class="hero-content">
-                <div class="badge">
-                    <span class="badge-dot"></span>
-                    AI-Powered Analysis
-                </div>
-                <h1>Stop Burnout<br><span class="gradient-text">Before It Starts</span></h1>
-                <p>LoadCheck uses AI to analyze your academic workload, sleep patterns, and deadlines. Get instant
-                    burnout risk predictions and personalized recommendations.</p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary btn-lg" onclick="showApp()">
-                        <i class="fas fa-rocket"></i> Start Free Analysis
-                    </button>
-                    <button class="btn btn-secondary btn-lg"
-                        onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">
-                        <i class="fas fa-play-circle"></i> See How It Works
-                    </button>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat"><span class="stat-number">10K+</span><span class="stat-label">Students
-                            Helped</span></div>
-                    <div class="stat-divider"></div>
-                    <div class="stat"><span class="stat-number">95%</span><span class="stat-label">Accuracy</span></div>
-                    <div class="stat-divider"></div>
-                    <div class="stat"><span class="stat-number">4.9★</span><span class="stat-label">Rating</span></div>
-                </div>
+            <div class="hero-bg">
+                <div class="gradient-orb orb-1"></div>
+                <div class="gradient-orb orb-2"></div>
+                <div class="gradient-orb orb-3"></div>
+                <div class="grid-lines"></div>
             </div>
-            <div class="hero-visual">
-                <div class="preview-card">
-                    <div class="preview-header">
-                        <div class="dots"><span class="dot red"></span><span class="dot yellow"></span><span
-                                class="dot green"></span></div>
-                        <span>Burnout Risk Analysis</span>
+            
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-badge animate-float" data-aos="fade-up">
+                        <span class="badge-dot"></span>
+                        <span>AI-Powered Burnout Prevention</span>
+                        <i class="fas fa-sparkles"></i>
                     </div>
-                    <div class="preview-body">
-                        <div class="risk-meter">
-                            <svg viewBox="0 0 100 100">
-                                <circle class="meter-bg" cx="50" cy="50" r="40" />
-                                <circle class="meter-fill" cx="50" cy="50" r="40" />
-                            </svg>
-                            <div class="meter-text">
-                                <span class="meter-value">32</span>
-                                <span class="meter-label">Low Risk</span>
-                            </div>
+                    
+                    <h1 class="hero-title">
+                        <span class="title-line" data-aos="fade-up" data-aos-delay="200">Stop Burnout</span>
+                        <span class="title-line gradient-text" data-aos="fade-up" data-aos-delay="400">Before It Starts</span>
+                    </h1>
+                    
+                    <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="600">
+                        LoadCheck uses advanced AI to analyze your study schedule, sleep patterns, and deadlines.
+                        Get instant burnout predictions and personalized wellness recommendations.
+                    </p>
+                    
+                    <div class="hero-cta" data-aos="fade-up" data-aos-delay="800">
+                        <button class="btn btn-primary btn-lg ripple-btn" onclick="showApp()">
+                            <span class="btn-content">
+                                <i class="fas fa-rocket"></i>
+                                Start Free Analysis
+                            </span>
+                            <span class="btn-shine"></span>
+                        </button>
+                        <button class="btn btn-glass btn-lg" onclick="scrollToSection('how-it-works')">
+                            <i class="fas fa-play-circle"></i>
+                            Watch Demo
+                        </button>
+                    </div>
+                    
+                    <div class="hero-stats" data-aos="fade-up" data-aos-delay="1000">
+                        <div class="stat-item">
+                            <span class="stat-number counter" data-target="10000">0</span>
+                            <span class="stat-plus">+</span>
+                            <span class="stat-label">Students Helped</span>
                         </div>
-                        <div class="preview-bars">
-                            <div class="bar-item"><span>📚 Homework</span>
-                                <div class="bar">
-                                    <div class="bar-fill" style="width:65%"></div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-number counter" data-target="95">0</span>
+                            <span class="stat-plus">%</span>
+                            <span class="stat-label">Accuracy Rate</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-number">4.9</span>
+                            <span class="stat-plus">★</span>
+                            <span class="stat-label">User Rating</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-visual" data-aos="fade-left" data-aos-duration="1200">
+                    <div class="dashboard-preview">
+                        <div class="preview-glow"></div>
+                        <div class="preview-header">
+                            <div class="preview-dots">
+                                <span class="dot red"></span>
+                                <span class="dot yellow"></span>
+                                <span class="dot green"></span>
+                            </div>
+                            <span class="preview-title">
+                                <i class="fas fa-chart-pie"></i>
+                                Burnout Risk Analysis
+                            </span>
+                        </div>
+                        <div class="preview-content">
+                            <div class="preview-meter">
+                                <svg class="meter-svg" viewBox="0 0 100 100">
+                                    <circle class="meter-bg" cx="50" cy="50" r="40"/>
+                                    <circle class="meter-progress" cx="50" cy="50" r="40"/>
+                                </svg>
+                                <div class="meter-center">
+                                    <span class="meter-value">32</span>
+                                    <span class="meter-label">Low Risk</span>
                                 </div>
                             </div>
-                            <div class="bar-item"><span>📝 Exams</span>
-                                <div class="bar">
-                                    <div class="bar-fill warning" style="width:40%"></div>
+                            <div class="preview-bars">
+                                <div class="preview-bar-item">
+                                    <div class="bar-info"><span class="bar-icon">📚</span><span>Homework Load</span></div>
+                                    <div class="bar-track"><div class="bar-fill" style="--width: 65%; --color: var(--primary);"></div></div>
+                                </div>
+                                <div class="preview-bar-item">
+                                    <div class="bar-info"><span class="bar-icon">📝</span><span>Exam Stress</span></div>
+                                    <div class="bar-track"><div class="bar-fill" style="--width: 40%; --color: var(--warning);"></div></div>
+                                </div>
+                                <div class="preview-bar-item">
+                                    <div class="bar-info"><span class="bar-icon">😴</span><span>Sleep Quality</span></div>
+                                    <div class="bar-track"><div class="bar-fill" style="--width: 80%; --color: var(--success);"></div></div>
                                 </div>
                             </div>
-                            <div class="bar-item"><span>😴 Sleep</span>
-                                <div class="bar">
-                                    <div class="bar-fill success" style="width:80%"></div>
-                                </div>
+                            <div class="preview-ai-badge">
+                                <i class="fas fa-robot"></i>
+                                <span>AI Analyzing...</span>
                             </div>
                         </div>
                     </div>
@@ -99,31 +151,37 @@
             </div>
         </section>
 
-        <!-- Features -->
+        <!-- Features Section -->
         <section class="features" id="features">
             <div class="container">
-                <h2 class="section-title">Why Students Love LoadCheck</h2>
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-badge">Features</span>
+                    <h2 class="section-title">Why Students Love <span class="gradient-text">LoadCheck</span></h2>
+                </div>
+                
                 <div class="features-grid">
-                    <div class="feature-card">
+                    <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="100">
                         <div class="feature-icon"><i class="fas fa-brain"></i></div>
                         <h3>AI-Powered Analysis</h3>
-                        <p>Advanced algorithms analyze your workload patterns and predict burnout risk with 95%
-                            accuracy.</p>
+                        <p>Advanced algorithms analyze your workload patterns and predict burnout risk with 95% accuracy.</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                    
+                    <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-icon warning"><i class="fas fa-bolt"></i></div>
                         <h3>Real-Time Insights</h3>
                         <p>Get instant feedback on your academic load and receive timely recommendations.</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-heart"></i></div>
+                    
+                    <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-icon success"><i class="fas fa-heart"></i></div>
                         <h3>Wellness Focused</h3>
                         <p>Personalized tips for sleep, study habits, and stress management tailored to you.</p>
                     </div>
-                    <div class="feature-card">
-                        <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-                        <h3>Private & Secure</h3>
-                        <p>Your data stays on your device. We never store personal information.</p>
+                    
+                    <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="feature-icon danger"><i class="fas fa-shield-alt"></i></div>
+                        <h3>100% Private</h3>
+                        <p>Your data is analyzed in real-time and never stored. Complete privacy guaranteed.</p>
                     </div>
                 </div>
             </div>
@@ -132,37 +190,54 @@
         <!-- How It Works -->
         <section class="how-it-works" id="how-it-works">
             <div class="container">
-                <h2 class="section-title">How It Works</h2>
-                <div class="steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
+                <div class="section-header" data-aos="fade-up">
+                    <span class="section-badge">Process</span>
+                    <h2 class="section-title">How It <span class="gradient-text">Works</span></h2>
+                </div>
+                
+                <div class="steps-container">
+                    <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="step-number">01</div>
+                        <div class="step-icon"><i class="fas fa-edit"></i></div>
                         <h3>Enter Your Data</h3>
-                        <p>Input your sleep hours, subjects, exams, and project deadlines.</p>
+                        <p>Input your sleep hours, subjects, upcoming exams, and project deadlines.</p>
                     </div>
-                    <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="step">
-                        <div class="step-number">2</div>
+                    
+                    <div class="step-connector"><i class="fas fa-arrow-right"></i></div>
+                    
+                    <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="step-number">02</div>
+                        <div class="step-icon warning"><i class="fas fa-cogs"></i></div>
                         <h3>AI Analysis</h3>
-                        <p>Our AI analyzes your workload and identifies stress patterns.</p>
+                        <p>Our AI processes your data using advanced algorithms.</p>
                     </div>
-                    <div class="step-arrow"><i class="fas fa-arrow-right"></i></div>
-                    <div class="step">
-                        <div class="step-number">3</div>
+                    
+                    <div class="step-connector"><i class="fas fa-arrow-right"></i></div>
+                    
+                    <div class="step-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="step-number">03</div>
+                        <div class="step-icon success"><i class="fas fa-chart-line"></i></div>
                         <h3>Get Results</h3>
-                        <p>Receive your burnout risk score with personalized recommendations.</p>
+                        <p>Receive your personalized burnout score with recommendations.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA -->
-        <section class="cta">
+        <!-- CTA Section -->
+        <section class="cta-section">
             <div class="container">
-                <h2>Ready to Take Control?</h2>
-                <p>Join thousands of students who are managing their workload better.</p>
-                <button class="btn btn-primary btn-lg" onclick="showApp()">
-                    <i class="fas fa-rocket"></i> Start Your Free Analysis
-                </button>
+                <div class="cta-card glass-card" data-aos="zoom-in">
+                    <h2>Ready to Take Control?</h2>
+                    <p>Join thousands of students who are managing their workload better.</p>
+                    <button class="btn btn-primary btn-lg ripple-btn" onclick="showApp()">
+                        <span class="btn-content">
+                            <i class="fas fa-rocket"></i>
+                            Start Your Free Analysis
+                        </span>
+                        <span class="btn-shine"></span>
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -182,155 +257,145 @@
 
     <!-- App Page -->
     <main id="app-page" class="hidden">
-        <div class="app-container">
+        <div class="app-wrapper">
             <div class="app-header">
-                <div>
-                    <h1><i class="fas fa-brain"></i> Workload Analysis</h1>
-                    <p>Enter your academic data to get your burnout risk assessment</p>
+                <div class="app-header-content">
+                    <h1><div class="header-icon"><i class="fas fa-brain"></i></div>Workload Analysis</h1>
+                    <p>Enter your academic data for a personalized burnout assessment</p>
                 </div>
-                <button class="btn btn-secondary" onclick="showLanding()">
+                <button class="btn btn-glass" onclick="showLanding()">
                     <i class="fas fa-arrow-left"></i> Back
                 </button>
             </div>
 
             <!-- Input Section -->
-            <div id="input-section">
+            <section id="input-section">
                 <form id="loadcheck-form">
-                    <!-- Sleep -->
-                    <div class="card">
+                    <!-- Sleep Card -->
+                    <div class="card glass-card" data-aos="fade-up">
                         <div class="card-header">
-                            <div class="card-icon sleep"><i class="fas fa-moon"></i></div>
-                            <div>
-                                <h2>Sleep Hours</h2>
-                                <p>Average hours per night</p>
-                            </div>
+                            <div class="card-icon sleep-icon"><i class="fas fa-moon"></i></div>
+                            <div class="card-title-group"><h2>Sleep Hours</h2><p>Average hours per night</p></div>
                         </div>
                         <div class="card-body">
                             <div class="sleep-control">
-                                <div class="sleep-value"><span id="sleep-display">7</span><small>hours</small></div>
+                                <div class="sleep-value-display">
+                                    <span class="sleep-value" id="sleep-display">7</span>
+                                    <span class="sleep-unit">hours</span>
+                                </div>
                                 <input type="range" id="sleep-range" min="3" max="12" value="7" step="0.5">
                                 <div class="sleep-labels">
-                                    <span>3h</span><span>7.5h (Ideal)</span><span>12h</span>
+                                    <span>3h 😫</span>
+                                    <span>7.5h 😊</span>
+                                    <span>12h 😴</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Subjects -->
-                    <div class="card">
+                    <!-- Subjects Card -->
+                    <div class="card glass-card" data-aos="fade-up" data-aos-delay="100">
                         <div class="card-header">
-                            <div class="card-icon subjects"><i class="fas fa-book"></i></div>
-                            <div>
-                                <h2>Subjects</h2>
-                                <p>Your current courses</p>
-                            </div>
-                            <button type="button" class="btn btn-small" onclick="addSubject()">
+                            <div class="card-icon subjects-icon"><i class="fas fa-book"></i></div>
+                            <div class="card-title-group"><h2>Subjects</h2><p>Your current courses</p></div>
+                            <button type="button" class="btn btn-small btn-primary" onclick="addSubject()">
                                 <i class="fas fa-plus"></i> Add
                             </button>
                         </div>
                         <div class="card-body" id="subjects-container">
                             <div class="empty-state">
                                 <i class="fas fa-book-open"></i>
-                                <p>No subjects added yet</p>
+                                <p>No subjects added</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Exams -->
-                    <div class="card">
+                    <!-- Exams Card -->
+                    <div class="card glass-card" data-aos="fade-up" data-aos-delay="200">
                         <div class="card-header">
-                            <div class="card-icon exams"><i class="fas fa-file-alt"></i></div>
-                            <div>
-                                <h2>Upcoming Exams</h2>
-                                <p>Within the next 2 weeks</p>
-                            </div>
-                            <button type="button" class="btn btn-small" onclick="addExam()">
+                            <div class="card-icon exams-icon"><i class="fas fa-file-alt"></i></div>
+                            <div class="card-title-group"><h2>Upcoming Exams</h2><p>Within the next 2 weeks</p></div>
+                            <button type="button" class="btn btn-small btn-primary" onclick="addExam()">
                                 <i class="fas fa-plus"></i> Add
                             </button>
                         </div>
                         <div class="card-body" id="exams-container">
                             <div class="empty-state">
                                 <i class="fas fa-calendar-check"></i>
-                                <p>No exams added yet</p>
+                                <p>No exams added</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Projects -->
-                    <div class="card">
+                    <!-- Projects Card -->
+                    <div class="card glass-card" data-aos="fade-up" data-aos-delay="300">
                         <div class="card-header">
-                            <div class="card-icon projects"><i class="fas fa-tasks"></i></div>
-                            <div>
-                                <h2>Projects</h2>
-                                <p>Active assignments</p>
-                            </div>
-                            <button type="button" class="btn btn-small" onclick="addProject()">
+                            <div class="card-icon projects-icon"><i class="fas fa-tasks"></i></div>
+                            <div class="card-title-group"><h2>Projects</h2><p>Active assignments</p></div>
+                            <button type="button" class="btn btn-small btn-primary" onclick="addProject()">
                                 <i class="fas fa-plus"></i> Add
                             </button>
                         </div>
                         <div class="card-body" id="projects-container">
                             <div class="empty-state">
                                 <i class="fas fa-clipboard-list"></i>
-                                <p>No projects added yet</p>
+                                <p>No projects added</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Submit -->
-                    <button type="submit" class="btn btn-primary btn-lg btn-full">
-                        <i class="fas fa-chart-line"></i> Analyze My Workload
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-primary btn-lg btn-full ripple-btn" data-aos="fade-up">
+                        <span class="btn-content">
+                            <i class="fas fa-magic"></i>
+                            Analyze My Workload
+                        </span>
+                        <span class="btn-shine"></span>
                     </button>
                 </form>
-            </div>
+            </section>
 
             <!-- Results Section -->
-            <div id="results-section" class="hidden">
-                <div class="results-header">
-                    <button class="btn btn-secondary" onclick="showInput()">
-                        <i class="fas fa-arrow-left"></i> Back to Input
-                    </button>
-                </div>
+            <section id="results-section" class="hidden">
+                <button class="btn btn-glass" onclick="showInput()" style="margin-bottom: 24px;">
+                    <i class="fas fa-arrow-left"></i> Modify Input
+                </button>
 
-                <!-- Risk Score -->
-                <div class="card result-card">
-                    <div class="risk-display">
-                        <div class="risk-circle">
-                            <svg viewBox="0 0 100 100">
-                                <circle class="risk-bg" cx="50" cy="50" r="45" />
-                                <circle class="risk-progress" id="risk-progress" cx="50" cy="50" r="45" />
+                <!-- Risk Overview -->
+                <div class="card glass-card result-hero" data-aos="zoom-in">
+                    <div class="risk-overview">
+                        <div class="risk-circle-wrapper">
+                            <svg class="risk-circle" viewBox="0 0 200 200">
+                                <circle class="risk-bg" cx="100" cy="100" r="85"/>
+                                <circle class="risk-progress" id="risk-progress" cx="100" cy="100" r="85"/>
                             </svg>
-                            <div class="risk-text">
+                            <div class="risk-center">
+                                <span class="risk-emoji" id="risk-emoji">😊</span>
                                 <span class="risk-score" id="risk-score">0</span>
-                                <span class="risk-label" id="risk-label">Analyzing...</span>
                             </div>
                         </div>
-                        <div class="risk-info">
-                            <span class="risk-badge" id="risk-badge">-</span>
-                            <p id="risk-summary">Your personalized burnout risk assessment</p>
+                        <div class="risk-details">
+                            <span class="risk-badge" id="risk-badge">Analyzing...</span>
+                            <h2 id="risk-label">Calculating...</h2>
+                            <p id="risk-summary">Please wait...</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- AI Message -->
-                <div class="card ai-card">
+                <!-- AI Recommendation -->
+                <div class="card glass-card ai-card" data-aos="fade-up">
                     <div class="ai-header">
-                        <div class="ai-icon"><i class="fas fa-robot"></i></div>
-                        <div>
-                            <h3>AI Recommendation</h3>
-                            <p>Personalized advice from our AI</p>
-                        </div>
+                        <div class="ai-avatar"><i class="fas fa-robot"></i></div>
+                        <div><h3>AI Recommendation</h3><span>Powered by Llama 3.3</span></div>
                     </div>
-                    <div class="ai-message" id="ai-message">Loading AI recommendation...</div>
+                    <div class="ai-message" id="ai-message">Loading...</div>
                 </div>
 
                 <!-- Breakdown -->
-                <div class="card">
+                <div class="card glass-card" data-aos="fade-up">
                     <div class="card-header">
                         <div class="card-icon"><i class="fas fa-chart-bar"></i></div>
-                        <div>
-                            <h2>Stress Breakdown</h2>
-                            <p>Contributing factors</p>
-                        </div>
+                        <div class="card-title-group"><h2>Stress Breakdown</h2><p>Contributing factors</p></div>
                     </div>
                     <div class="card-body">
                         <div id="breakdown-chart" class="breakdown-chart"></div>
@@ -338,49 +403,51 @@
                 </div>
 
                 <!-- Causes & Recommendations -->
-                <div class="two-columns">
-                    <div class="card">
+                <div class="results-grid">
+                    <div class="card glass-card" data-aos="fade-up">
                         <div class="card-header">
-                            <div class="card-icon warning"><i class="fas fa-exclamation-triangle"></i></div>
-                            <div>
-                                <h2>Main Causes</h2>
-                            </div>
+                            <div class="card-icon causes-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                            <div class="card-title-group"><h2>Main Causes</h2></div>
                         </div>
                         <div class="card-body">
-                            <ul id="causes-list" class="list"></ul>
+                            <ul id="causes-list" class="insight-list"></ul>
                         </div>
                     </div>
-                    <div class="card">
+
+                    <div class="card glass-card" data-aos="fade-up" data-aos-delay="100">
                         <div class="card-header">
-                            <div class="card-icon success"><i class="fas fa-lightbulb"></i></div>
-                            <div>
-                                <h2>Recommendations</h2>
-                            </div>
+                            <div class="card-icon recommendations-icon"><i class="fas fa-lightbulb"></i></div>
+                            <div class="card-title-group"><h2>Recommendations</h2></div>
                         </div>
                         <div class="card-body">
-                            <ul id="recommendations-list" class="list"></ul>
+                            <ul id="recommendations-list" class="insight-list"></ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- New Analysis -->
-                <button class="btn btn-primary btn-lg btn-full" onclick="showInput()">
-                    <i class="fas fa-redo"></i> Start New Analysis
+                <button class="btn btn-primary btn-lg btn-full ripple-btn" onclick="showInput()">
+                    <span class="btn-content"><i class="fas fa-redo"></i> Start New Analysis</span>
+                    <span class="btn-shine"></span>
                 </button>
-            </div>
+            </section>
         </div>
     </main>
 
-    <!-- Loading -->
+    <!-- Loading Overlay -->
     <div id="loading" class="loading-overlay hidden">
         <div class="loading-content">
-            <div class="spinner"></div>
+            <div class="loading-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <i class="fas fa-brain"></i>
+            </div>
             <h3>Analyzing Your Workload</h3>
             <p>AI is processing your data...</p>
         </div>
     </div>
 
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="app.js"></script>
 </body>
-
 </html>
