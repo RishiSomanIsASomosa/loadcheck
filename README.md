@@ -211,6 +211,20 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+## 👨‍💻 Author
+
+<p align="center">
+  <a href="https://github.com/RishiSomanIsASomosa">
+    <img src="https://img.shields.io/badge/GitHub-RishiSomanIsASomosa-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+  </a>
+</p>
+
+<p align="center">
+  <b>Created by <a href="https://github.com/RishiSomanIsASomosa">@RishiSomanIsASomosa</a></b>
+</p>
+
+---
+
 <p align="center">
   <img src="https://img.shields.io/badge/Made%20with-❤️-red?style=for-the-badge" alt="Made with love">
   <img src="https://img.shields.io/badge/For-Students-blue?style=for-the-badge" alt="For Students">
