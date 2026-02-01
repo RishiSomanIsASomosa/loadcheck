@@ -1,41 +1,66 @@
 # 🧠 LoadCheck - AI Student Burnout Prevention
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.11+-blue?style=for-the-badge&logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/Flask-2.3.0-green?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
-  <img src="https://img.shields.io/badge/Groq-AI-orange?style=for-the-badge&logo=openai&logoColor=white" alt="Groq AI">
+  <img src="https://img.shields.io/badge/Node.js-18+-green?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
+  <img src="https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel">
+  <img src="https://img.shields.io/badge/Groq-Llama_3.3-orange?style=for-the-badge&logo=meta&logoColor=white" alt="Groq AI">
   <img src="https://img.shields.io/badge/License-MIT-purple?style=for-the-badge" alt="License">
 </p>
 
 <p align="center">
-  <b>An AI-powered academic workload analyzer that helps students prevent burnout by analyzing their study patterns, sleep habits, and upcoming deadlines.</b>
+  <b>🔥 An AI-powered academic workload analyzer that helps students prevent burnout by analyzing their study patterns, sleep habits, and upcoming deadlines.</b>
 </p>
+
+<p align="center">
+  <a href="https://loadcheck.vercel.app">🌐 Live Demo</a> •
+  <a href="#-features">Features</a> •
+  <a href="#-quick-start">Quick Start</a> •
+  <a href="#-tech-stack">Tech Stack</a>
+</p>
+
+---
+
+## 🌟 Live Demo
+
+**👉 [https://loadcheck.vercel.app](https://loadcheck.vercel.app)**
 
 ---
 
 ## ✨ Features
 
-- **🎯 Burnout Risk Assessment** - Get an instant risk score based on your academic workload
+### 🎯 Core Features
+- **Burnout Risk Assessment** - Get an instant risk score (0-100) based on your academic workload
 - **🤖 AI-Powered Recommendations** - Personalized advice from Groq's Llama 3.3 70B model
 - **📊 Detailed Breakdown** - Visual analysis of homework, exams, projects, and sleep impact
 - **😴 Sleep Analysis** - Understand how your sleep patterns affect your stress levels
 - **📅 Deadline Clustering Detection** - Identifies when you have too many deadlines close together
-- **🎨 Beautiful UI** - Modern, animated interface with dark mode
 
-## 🖼️ Screenshots
+### 🎨 Premium UI/UX
+- **Glass-morphism Design** - Modern frosted glass effects throughout
+- **Animated Particles** - Dynamic floating particle background
+- **Cursor Glow** - Interactive cursor trail effect
+- **Gradient Orbs** - Smooth floating gradient animations
+- **AOS Animations** - Scroll-triggered animations on all elements
+- **Interactive Timeline** - Visual journey through the analysis process
+- **Pulsing Elements** - Living, breathing UI components
+- **Dark Mode** - Eye-friendly dark theme
 
-| Landing Page | Analysis Dashboard |
-|--------------|-------------------|
-| Hero section with animated dashboard preview | Real-time burnout risk visualization |
+---
+
+## 🖼️ Preview
+
+| Landing Page | Analysis Results |
+|:------------:|:----------------:|
+| Beautiful animated hero with dashboard preview | Real-time burnout risk visualization with AI tips |
+
+---
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Option 1: Use the Live Demo
+Just visit **[loadcheck.vercel.app](https://loadcheck.vercel.app)** - no setup required!
 
-- Python 3.11 or higher
-- A Groq API key (free at [console.groq.com](https://console.groq.com))
-
-### Installation
+### Option 2: Run Locally
 
 1. **Clone the repository**
    ```bash
@@ -43,99 +68,120 @@
    cd loadcheck
    ```
 
-2. **Create a virtual environment**
+2. **Install dependencies**
    ```bash
-   python -m venv .venv
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   # Create .env file
+   echo "GROQ_API_KEY=your_groq_api_key_here" > .env
+   ```
    
-   # Windows
-   .\.venv\Scripts\activate
-   
-   # macOS/Linux
-   source .venv/bin/activate
-   ```
+   Get a free API key at [console.groq.com](https://console.groq.com)
 
-3. **Install dependencies**
+4. **Run with Vercel CLI**
    ```bash
-   pip install -r requirements.txt
+   npm i -g vercel
+   vercel dev
    ```
 
-4. **Set up environment variables**
-   ```bash
-   # Copy the example file
-   cp .env.example .env
-   
-   # Edit .env and add your Groq API key
-   GROQ_API_KEY=your_groq_api_key_here
+5. **Open your browser**
+   ```
+   http://localhost:3000
    ```
 
-5. **Run the application**
-   ```bash
-   python app.py
-   ```
-
-6. **Open your browser**
-   ```
-   http://127.0.0.1:5000
-   ```
+---
 
 ## 📖 How It Works
 
-1. **Enter Your Sleep Hours** - Use the slider to input your average nightly sleep
-2. **Add Your Subjects** - List each subject with weekly homework hours
-3. **Add Upcoming Exams** - Include exam dates and difficulty levels
-4. **Add Projects** - Enter project deadlines and complexity
-5. **Get Your Analysis** - Receive a detailed burnout risk assessment with AI recommendations
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  📝 Enter Data  │ -> │  🤖 AI Analysis │ -> │  📊 Get Results │ -> │  🎯 Take Action │
+│                 │    │                 │    │                 │    │                 │
+│  • Sleep hours  │    │  Weighted       │    │  • Risk score   │    │  Balance your   │
+│  • Subjects     │    │  algorithm +    │    │  • Breakdown    │    │  schedule and   │
+│  • Exams        │    │  Llama 3.3 AI   │    │  • AI tips      │    │  thrive! 🚀     │
+│  • Projects     │    │                 │    │  • Causes       │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘    └─────────────────┘
+```
 
-## 🧮 Risk Calculation
+---
 
-LoadCheck uses a weighted scoring algorithm:
+## 🧮 Risk Calculation Algorithm
 
-| Factor | Weight | Description |
-|--------|--------|-------------|
-| Homework | 1.5x | Weekly homework hours per subject |
-| Exams | 3.0x | Upcoming exams within 14 days |
-| Projects | 2.0x | Active projects and deadlines |
-| Sleep Deficit | 2.5x | Hours below recommended 8 hours |
-| Deadline Clustering | 2.0x | Multiple deadlines within 3 days |
+| Factor | Weight | Max Score | Description |
+|--------|:------:|:---------:|-------------|
+| 📚 Homework | 1.5x | 30 | Weekly homework hours per subject |
+| 📝 Exams | 3.0x | 30 | Upcoming exams within 14 days |
+| 🎯 Projects | 2.0x | 25 | Active projects and deadlines |
+| 😴 Sleep Deficit | 2.5x | 20 | Hours below recommended 7 hours |
+| 📅 Deadline Clustering | 2.0x | 15 | Multiple deadlines within 3 days |
 
 ### Risk Levels
 
-- 🟢 **Low (0-30)** - You're managing well! Keep it up.
-- 🟡 **Medium (31-60)** - Some stress detected. Consider balancing your schedule.
-- 🔴 **High (61-100)** - High burnout risk! Take immediate steps to reduce load.
+| Score | Level | Emoji | Meaning |
+|:-----:|:-----:|:-----:|---------|
+| 0-30 | Low | 😊 | You're managing well! Keep it up. |
+| 31-60 | Medium | 😐 | Some stress detected. Consider balancing. |
+| 61-100 | High | 😰 | High burnout risk! Take action now. |
+
+---
 
 ## 🛠️ Tech Stack
 
-- **Backend**: Flask 2.3.0 (Python)
-- **AI**: Groq API with Llama 3.3-70b-versatile
-- **Frontend**: Vanilla JavaScript, CSS3 with animations
-- **Font**: Plus Jakarta Sans
-- **Icons**: Font Awesome 6.4.0
+| Category | Technology |
+|----------|------------|
+| **Frontend** | HTML5, CSS3, Vanilla JavaScript |
+| **Backend** | Node.js (Vercel Serverless Functions) |
+| **AI Model** | Groq API with Llama 3.3-70b-versatile |
+| **Hosting** | Vercel |
+| **Animations** | AOS (Animate on Scroll), Custom CSS |
+| **Font** | Plus Jakarta Sans |
+| **Icons** | Font Awesome 6.4.0 |
+
+---
 
 ## 📁 Project Structure
 
 ```
 loadcheck/
-├── app.py                 # Flask backend & API routes
-├── requirements.txt       # Python dependencies
+├── api/
+│   └── analyze.js        # Serverless API endpoint
+├── index.html            # Main HTML with landing + app
+├── style.css             # Premium styling & animations
+├── app.js                # Frontend JavaScript
+├── vercel.json           # Vercel deployment config
+├── package.json          # Node.js dependencies
 ├── .env.example          # Environment variables template
-├── .env                  # Your local environment variables (git ignored)
 ├── .gitignore            # Git ignore rules
-├── README.md             # This file
-├── static/
-│   ├── css/
-│   │   └── style.css     # All styling & animations
-│   └── js/
-│       └── app.js        # Frontend interactivity
-└── templates/
-    └── index.html        # Main HTML template
+├── LICENSE               # MIT License
+└── README.md             # This file
 ```
+
+---
 
 ## 🔒 Environment Variables
 
 | Variable | Required | Description |
-|----------|----------|-------------|
-| `GROQ_API_KEY` | Yes | Your Groq API key for AI recommendations |
+|----------|:--------:|-------------|
+| `GROQ_API_KEY` | ✅ | Your Groq API key for AI recommendations |
+
+---
+
+## 🌐 Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. Fork this repository
+2. Import to [Vercel](https://vercel.com/new)
+3. Add `GROQ_API_KEY` in Environment Variables
+4. Deploy! 🚀
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/RishiSomanIsASomosa/loadcheck&env=GROQ_API_KEY)
+
+---
 
 ## 🤝 Contributing
 
@@ -147,22 +193,33 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+---
+
 ## 🙏 Acknowledgments
 
-- [Groq](https://groq.com) for providing fast AI inference
-- [Font Awesome](https://fontawesome.com) for icons
+- [Groq](https://groq.com) for blazing fast AI inference
+- [Vercel](https://vercel.com) for seamless deployment
+- [Font Awesome](https://fontawesome.com) for beautiful icons
+- [AOS](https://michalsnik.github.io/aos/) for scroll animations
 - [Google Fonts](https://fonts.google.com) for Plus Jakarta Sans
 
 ---
 
 <p align="center">
-  Made with ❤️ for students everywhere
+  <img src="https://img.shields.io/badge/Made%20with-❤️-red?style=for-the-badge" alt="Made with love">
+  <img src="https://img.shields.io/badge/For-Students-blue?style=for-the-badge" alt="For Students">
 </p>
 
 <p align="center">
-  <a href="https://github.com/RishiSomanIsASomosa/loadcheck">⭐ Star this repo if you found it helpful!</a>
+  <b>⭐ Star this repo if you found it helpful!</b>
+</p>
+
+<p align="center">
+  <a href="https://loadcheck.vercel.app">Try LoadCheck Now →</a>
 </p>
