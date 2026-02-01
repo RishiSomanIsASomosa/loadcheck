@@ -130,7 +130,7 @@ function collectFormData() {
 // Display results
 function displayResults(data) {
     const analysis = data.analysis;
-    
+
     // Score
     const scoreEl = document.getElementById('risk-score');
     const progressEl = document.getElementById('risk-progress');
@@ -139,7 +139,7 @@ function displayResults(data) {
     const summaryEl = document.getElementById('risk-summary');
 
     scoreEl.textContent = Math.round(analysis.score);
-    
+
     // Animate progress ring
     const circumference = 283;
     const offset = circumference - (analysis.score / 100) * circumference;
@@ -177,7 +177,7 @@ function displayResults(data) {
     // Breakdown
     const breakdownEl = document.getElementById('breakdown-chart');
     breakdownEl.innerHTML = '';
-    
+
     const breakdownLabels = {
         homework: 'Homework Load',
         exams: 'Exam Stress',
@@ -222,12 +222,12 @@ const form = document.getElementById('loadcheck-form');
 if (form) {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const formData = collectFormData();
         const loading = document.getElementById('loading');
-        
+
         loading.classList.remove('hidden');
-        
+
         try {
             const response = await fetch('/api/analyze', {
                 method: 'POST',
@@ -253,7 +253,7 @@ if (form) {
 
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
+    anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) target.scrollIntoView({ behavior: 'smooth' });

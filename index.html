@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LoadCheck - AI Student Burnout Prevention</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text y='50%' x='50%' font-size='60' text-anchor='middle' dominant-baseline='central'>🧠</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text y='50%' x='50%' font-size='60' text-anchor='middle' dominant-baseline='central'>🧠</text></svg>">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="gradient-bg"></div>
-    
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -36,17 +39,20 @@
                     AI-Powered Analysis
                 </div>
                 <h1>Stop Burnout<br><span class="gradient-text">Before It Starts</span></h1>
-                <p>LoadCheck uses AI to analyze your academic workload, sleep patterns, and deadlines. Get instant burnout risk predictions and personalized recommendations.</p>
+                <p>LoadCheck uses AI to analyze your academic workload, sleep patterns, and deadlines. Get instant
+                    burnout risk predictions and personalized recommendations.</p>
                 <div class="hero-buttons">
                     <button class="btn btn-primary btn-lg" onclick="showApp()">
                         <i class="fas fa-rocket"></i> Start Free Analysis
                     </button>
-                    <button class="btn btn-secondary btn-lg" onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">
+                    <button class="btn btn-secondary btn-lg"
+                        onclick="document.getElementById('how-it-works').scrollIntoView({behavior:'smooth'})">
                         <i class="fas fa-play-circle"></i> See How It Works
                     </button>
                 </div>
                 <div class="hero-stats">
-                    <div class="stat"><span class="stat-number">10K+</span><span class="stat-label">Students Helped</span></div>
+                    <div class="stat"><span class="stat-number">10K+</span><span class="stat-label">Students
+                            Helped</span></div>
                     <div class="stat-divider"></div>
                     <div class="stat"><span class="stat-number">95%</span><span class="stat-label">Accuracy</span></div>
                     <div class="stat-divider"></div>
@@ -56,14 +62,15 @@
             <div class="hero-visual">
                 <div class="preview-card">
                     <div class="preview-header">
-                        <div class="dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+                        <div class="dots"><span class="dot red"></span><span class="dot yellow"></span><span
+                                class="dot green"></span></div>
                         <span>Burnout Risk Analysis</span>
                     </div>
                     <div class="preview-body">
                         <div class="risk-meter">
                             <svg viewBox="0 0 100 100">
-                                <circle class="meter-bg" cx="50" cy="50" r="40"/>
-                                <circle class="meter-fill" cx="50" cy="50" r="40"/>
+                                <circle class="meter-bg" cx="50" cy="50" r="40" />
+                                <circle class="meter-fill" cx="50" cy="50" r="40" />
                             </svg>
                             <div class="meter-text">
                                 <span class="meter-value">32</span>
@@ -71,9 +78,21 @@
                             </div>
                         </div>
                         <div class="preview-bars">
-                            <div class="bar-item"><span>📚 Homework</span><div class="bar"><div class="bar-fill" style="width:65%"></div></div></div>
-                            <div class="bar-item"><span>📝 Exams</span><div class="bar"><div class="bar-fill warning" style="width:40%"></div></div></div>
-                            <div class="bar-item"><span>😴 Sleep</span><div class="bar"><div class="bar-fill success" style="width:80%"></div></div></div>
+                            <div class="bar-item"><span>📚 Homework</span>
+                                <div class="bar">
+                                    <div class="bar-fill" style="width:65%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-item"><span>📝 Exams</span>
+                                <div class="bar">
+                                    <div class="bar-fill warning" style="width:40%"></div>
+                                </div>
+                            </div>
+                            <div class="bar-item"><span>😴 Sleep</span>
+                                <div class="bar">
+                                    <div class="bar-fill success" style="width:80%"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -88,7 +107,8 @@
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fas fa-brain"></i></div>
                         <h3>AI-Powered Analysis</h3>
-                        <p>Advanced algorithms analyze your workload patterns and predict burnout risk with 95% accuracy.</p>
+                        <p>Advanced algorithms analyze your workload patterns and predict burnout risk with 95%
+                            accuracy.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon"><i class="fas fa-clock"></i></div>
@@ -180,7 +200,10 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-icon sleep"><i class="fas fa-moon"></i></div>
-                            <div><h2>Sleep Hours</h2><p>Average hours per night</p></div>
+                            <div>
+                                <h2>Sleep Hours</h2>
+                                <p>Average hours per night</p>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="sleep-control">
@@ -197,7 +220,10 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-icon subjects"><i class="fas fa-book"></i></div>
-                            <div><h2>Subjects</h2><p>Your current courses</p></div>
+                            <div>
+                                <h2>Subjects</h2>
+                                <p>Your current courses</p>
+                            </div>
                             <button type="button" class="btn btn-small" onclick="addSubject()">
                                 <i class="fas fa-plus"></i> Add
                             </button>
@@ -214,7 +240,10 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-icon exams"><i class="fas fa-file-alt"></i></div>
-                            <div><h2>Upcoming Exams</h2><p>Within the next 2 weeks</p></div>
+                            <div>
+                                <h2>Upcoming Exams</h2>
+                                <p>Within the next 2 weeks</p>
+                            </div>
                             <button type="button" class="btn btn-small" onclick="addExam()">
                                 <i class="fas fa-plus"></i> Add
                             </button>
@@ -231,7 +260,10 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-icon projects"><i class="fas fa-tasks"></i></div>
-                            <div><h2>Projects</h2><p>Active assignments</p></div>
+                            <div>
+                                <h2>Projects</h2>
+                                <p>Active assignments</p>
+                            </div>
                             <button type="button" class="btn btn-small" onclick="addProject()">
                                 <i class="fas fa-plus"></i> Add
                             </button>
@@ -264,8 +296,8 @@
                     <div class="risk-display">
                         <div class="risk-circle">
                             <svg viewBox="0 0 100 100">
-                                <circle class="risk-bg" cx="50" cy="50" r="45"/>
-                                <circle class="risk-progress" id="risk-progress" cx="50" cy="50" r="45"/>
+                                <circle class="risk-bg" cx="50" cy="50" r="45" />
+                                <circle class="risk-progress" id="risk-progress" cx="50" cy="50" r="45" />
                             </svg>
                             <div class="risk-text">
                                 <span class="risk-score" id="risk-score">0</span>
@@ -283,7 +315,10 @@
                 <div class="card ai-card">
                     <div class="ai-header">
                         <div class="ai-icon"><i class="fas fa-robot"></i></div>
-                        <div><h3>AI Recommendation</h3><p>Personalized advice from our AI</p></div>
+                        <div>
+                            <h3>AI Recommendation</h3>
+                            <p>Personalized advice from our AI</p>
+                        </div>
                     </div>
                     <div class="ai-message" id="ai-message">Loading AI recommendation...</div>
                 </div>
@@ -292,7 +327,10 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-icon"><i class="fas fa-chart-bar"></i></div>
-                        <div><h2>Stress Breakdown</h2><p>Contributing factors</p></div>
+                        <div>
+                            <h2>Stress Breakdown</h2>
+                            <p>Contributing factors</p>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div id="breakdown-chart" class="breakdown-chart"></div>
@@ -304,7 +342,9 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-icon warning"><i class="fas fa-exclamation-triangle"></i></div>
-                            <div><h2>Main Causes</h2></div>
+                            <div>
+                                <h2>Main Causes</h2>
+                            </div>
                         </div>
                         <div class="card-body">
                             <ul id="causes-list" class="list"></ul>
@@ -313,7 +353,9 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-icon success"><i class="fas fa-lightbulb"></i></div>
-                            <div><h2>Recommendations</h2></div>
+                            <div>
+                                <h2>Recommendations</h2>
+                            </div>
                         </div>
                         <div class="card-body">
                             <ul id="recommendations-list" class="list"></ul>
@@ -340,4 +382,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>
