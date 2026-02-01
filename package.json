@@ -2,9 +2,6 @@
   "name": "loadcheck",
   "version": "1.0.0",
   "description": "AI Student Burnout Prevention",
-  "scripts": {
-    "start": "node api/analyze.js"
-  },
   "dependencies": {
     "groq-sdk": "^0.3.0"
   }
