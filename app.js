@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize sleep slider
     initSleepSlider();
 
+    // Initialize timeline animation
+    initTimelineAnimation();
+
     // Handle form submission
     const form = document.getElementById('loadcheck-form');
     if (form) {
@@ -30,6 +33,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Timeline scroll animation
+function initTimelineAnimation() {
+    const timeline = document.querySelector('.timeline');
+    const progress = document.querySelector('.timeline-progress');
+    if (!timeline || !progress) return;
+
+    const updateProgress = () => {
+        const rect = timeline.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        const timelineTop = rect.top;
+        const timelineHeight = rect.height;
+        
+        if (timelineTop < windowHeight && timelineTop + timelineHeight > 0) {
+            const scrolled = Math.max(0, windowHeight - timelineTop);
+            const percentage = Math.min((scrolled / (timelineHeight + windowHeight * 0.5)) * 100, 100);
+            progress.style.height = percentage + '%';
+        }
+    };
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+}
 
 // Cursor glow effect
 function initCursorGlow() {
