@@ -45,7 +45,7 @@ function initTimelineAnimation() {
         const windowHeight = window.innerHeight;
         const timelineTop = rect.top;
         const timelineHeight = rect.height;
-        
+
         if (timelineTop < windowHeight && timelineTop + timelineHeight > 0) {
             const scrolled = Math.max(0, windowHeight - timelineTop);
             const percentage = Math.min((scrolled / (timelineHeight + windowHeight * 0.5)) * 100, 100);
