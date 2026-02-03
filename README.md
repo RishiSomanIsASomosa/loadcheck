@@ -38,12 +38,12 @@
 ### 🎨 Premium UI/UX
 - **Glass-morphism Design** - Modern frosted glass effects throughout
 - **Animated Particles** - Dynamic floating particle background
-- **Cursor Glow** - Interactive cursor trail effect
+- **Cursor Glow Effect** - Interactive cursor trail with gradient glow
 - **Gradient Orbs** - Smooth floating gradient animations
 - **AOS Animations** - Scroll-triggered animations on all elements
-- **Interactive Timeline** - Visual journey through the analysis process
-- **Pulsing Elements** - Living, breathing UI components
-- **Dark Mode** - Eye-friendly dark theme
+- **Interactive Timeline** - Visual journey with scroll-triggered progress
+- **Floating Shapes** - Geometric shapes with subtle animations
+- **Dark Theme** - Premium deep dark color scheme with purple/pink accents
 
 ---
 
@@ -137,8 +137,8 @@ Just visit **[loadcheck.vercel.app](https://loadcheck.vercel.app)** - no setup r
 | **Backend** | Node.js (Vercel Serverless Functions) |
 | **AI Model** | Groq API with Llama 3.3-70b-versatile |
 | **Hosting** | Vercel |
-| **Animations** | AOS (Animate on Scroll), Custom CSS |
-| **Font** | Plus Jakarta Sans |
+| **Animations** | AOS (Animate on Scroll), Custom CSS Keyframes |
+| **Fonts** | Sora (Headings) + Inter (Body) |
 | **Icons** | Font Awesome 6.4.0 |
 
 ---

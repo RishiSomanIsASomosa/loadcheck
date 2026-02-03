@@ -3,14 +3,15 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize AOS
     AOS.init({
-        duration: 800,
-        easing: 'ease-out',
+        duration: 900,
+        easing: 'ease-out-cubic',
         once: true,
-        offset: 100
+        offset: 80
     });
 
-    // Initialize cursor glow
+    // Initialize cursor effects
     initCursorGlow();
+    initCursorDot();
 
     // Initialize particles
     initParticles();
@@ -24,6 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize timeline animation
     initTimelineAnimation();
 
+    // Initialize navbar scroll effect
+    initNavbarScroll();
+
+    // Initialize magnetic buttons
+    initMagneticButtons();
+
     // Handle form submission
     const form = document.getElementById('loadcheck-form');
     if (form) {
@@ -33,6 +40,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Navbar scroll effect
+function initNavbarScroll() {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    }, { passive: true });
+}
+
+// Magnetic button effect
+function initMagneticButtons() {
+    const magneticBtns = document.querySelectorAll('.magnetic-btn');
+    magneticBtns.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+        });
+        btn.addEventListener('mouseleave', () => {
+            btn.style.transform = 'translate(0, 0)';
+        });
+    });
+}
 
 // Timeline scroll animation
 function initTimelineAnimation() {
@@ -62,10 +99,44 @@ function initCursorGlow() {
     const glow = document.querySelector('.cursor-glow');
     if (!glow) return;
 
+    let mouseX = 0, mouseY = 0;
+    let glowX = 0, glowY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateGlow() {
+        glowX += (mouseX - glowX) * 0.08;
+        glowY += (mouseY - glowY) * 0.08;
+        glow.style.left = glowX + 'px';
+        glow.style.top = glowY + 'px';
+        requestAnimationFrame(animateGlow);
+    }
+    animateGlow();
+}
+
+// Cursor dot effect
+function initCursorDot() {
+    const dot = document.querySelector('.cursor-dot');
+    if (!dot) return;
+
     document.addEventListener('mousemove', (e) => {
         requestAnimationFrame(() => {
-            glow.style.left = e.clientX + 'px';
-            glow.style.top = e.clientY + 'px';
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+        });
+    });
+
+    // Scale on clickable elements
+    const interactiveElements = document.querySelectorAll('a, button, input, select, .btn');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            dot.style.transform = 'translate(-50%, -50%) scale(2)';
+        });
+        el.addEventListener('mouseleave', () => {
+            dot.style.transform = 'translate(-50%, -50%) scale(1)';
         });
     });
 }
@@ -111,11 +182,69 @@ function animateCounters() {
 function initSleepSlider() {
     const slider = document.getElementById('sleep-range');
     const display = document.getElementById('sleep-display');
+    const qualityBadge = document.querySelector('.sleep-quality-badge');
     if (!slider || !display) return;
 
+    const updateSleepQuality = (value) => {
+        display.textContent = value;
+
+        if (!qualityBadge) return;
+
+        const emoji = qualityBadge.querySelector('.quality-emoji');
+        const text = qualityBadge.querySelector('.quality-text');
+
+        let quality, emoj, bgColor, borderColor;
+
+        if (value <= 4) {
+            quality = 'Critical';
+            emoj = '😫';
+            bgColor = 'rgba(239, 68, 68, 0.2)';
+            borderColor = 'rgba(239, 68, 68, 0.4)';
+            if (text) text.style.color = '#ef4444';
+        } else if (value <= 5) {
+            quality = 'Poor';
+            emoj = '😟';
+            bgColor = 'rgba(239, 68, 68, 0.15)';
+            borderColor = 'rgba(239, 68, 68, 0.3)';
+            if (text) text.style.color = '#ef4444';
+        } else if (value <= 6) {
+            quality = 'Fair';
+            emoj = '😐';
+            bgColor = 'rgba(245, 158, 11, 0.15)';
+            borderColor = 'rgba(245, 158, 11, 0.3)';
+            if (text) text.style.color = '#f59e0b';
+        } else if (value <= 7) {
+            quality = 'Good';
+            emoj = '🙂';
+            bgColor = 'rgba(16, 185, 129, 0.15)';
+            borderColor = 'rgba(16, 185, 129, 0.3)';
+            if (text) text.style.color = '#10b981';
+        } else if (value <= 8) {
+            quality = 'Great';
+            emoj = '😊';
+            bgColor = 'rgba(16, 185, 129, 0.2)';
+            borderColor = 'rgba(16, 185, 129, 0.4)';
+            if (text) text.style.color = '#10b981';
+        } else {
+            quality = 'Excellent';
+            emoj = '😴';
+            bgColor = 'rgba(6, 182, 212, 0.15)';
+            borderColor = 'rgba(6, 182, 212, 0.3)';
+            if (text) text.style.color = '#06b6d4';
+        }
+
+        if (emoji) emoji.textContent = emoj;
+        if (text) text.textContent = quality;
+        qualityBadge.style.background = bgColor;
+        qualityBadge.style.borderColor = borderColor;
+    };
+
     slider.addEventListener('input', () => {
-        display.textContent = slider.value;
+        updateSleepQuality(parseInt(slider.value));
     });
+
+    // Initialize
+    updateSleepQuality(parseInt(slider.value));
 }
 
 // Navigation functions
@@ -218,22 +347,35 @@ function addProject() {
 
 function removeItem(id, type) {
     const item = document.getElementById(id);
-    if (item) item.remove();
-
-    const container = document.getElementById(`${type}-container`);
-    if (container && container.children.length === 0) {
-        const icons = {
-            subjects: 'fa-book-open',
-            exams: 'fa-file-alt',
-            projects: 'fa-project-diagram'
-        };
-        container.innerHTML = `
-            <div class="empty-state">
-                <i class="fas ${icons[type]}"></i>
-                <p>No ${type} added yet</p>
-            </div>
-        `;
+    if (item) {
+        item.style.animation = 'form-item-exit 0.3s ease forwards';
+        setTimeout(() => item.remove(), 300);
     }
+
+    setTimeout(() => {
+        const container = document.getElementById(`${type}-container`);
+        if (container && container.children.length === 0) {
+            const icons = {
+                subjects: 'fa-book-open',
+                exams: 'fa-file-alt',
+                projects: 'fa-project-diagram'
+            };
+            const hints = {
+                subjects: 'Click "Add Subject" to get started',
+                exams: 'Click "Add Exam" to track deadlines',
+                projects: 'Click "Add Project" to track assignments'
+            };
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas ${icons[type]}"></i>
+                    </div>
+                    <p>No ${type} added yet</p>
+                    <span class="empty-hint">${hints[type]}</span>
+                </div>
+            `;
+        }
+    }, 300);
 }
 
 // Collect form data
@@ -299,6 +441,7 @@ async function analyzeWorkload() {
 
     // Show loading
     document.getElementById('loading').classList.remove('hidden');
+    animateLoadingSteps();
 
     try {
         const response = await fetch('/api/analyze', {
@@ -336,14 +479,27 @@ function displayResults(result) {
     const offset = circumference - (score / 100) * circumference;
     progress.style.strokeDashoffset = offset;
 
+    // Set gradient based on level
+    let gradientId;
+    if (level === 'low') gradientId = 'url(#riskGradientLow)';
+    else if (level === 'medium') gradientId = 'url(#riskGradientMedium)';
+    else gradientId = 'url(#riskGradientHigh)';
+
+    progress.style.stroke = gradientId;
+
     // Set color based on level
     let color;
     if (level === 'low') color = '#10b981';
     else if (level === 'medium') color = '#f59e0b';
     else color = '#ef4444';
 
-    progress.style.stroke = color;
     document.getElementById('risk-score').style.color = color;
+
+    // Update risk indicator bar
+    const indicatorMarker = document.querySelector('.indicator-marker');
+    if (indicatorMarker) {
+        indicatorMarker.style.left = score + '%';
+    }
 
     // Update emoji and badge
     const emojis = { low: '😊', medium: '😐', high: '😰' };
@@ -372,13 +528,13 @@ function displayResults(result) {
     chart.innerHTML = '';
 
     const breakdownItems = [
-        { key: 'sleep', label: 'Sleep Score', color: '#6366f1' },
-        { key: 'study', label: 'Study Load', color: '#f59e0b' },
-        { key: 'exams', label: 'Exam Stress', color: '#ef4444' },
-        { key: 'projects', label: 'Project Load', color: '#10b981' }
+        { key: 'sleep', label: 'Sleep Score', color: 'linear-gradient(90deg, #6366f1, #8b5cf6)' },
+        { key: 'study', label: 'Study Load', color: 'linear-gradient(90deg, #f59e0b, #f97316)' },
+        { key: 'exams', label: 'Exam Stress', color: 'linear-gradient(90deg, #ef4444, #f97316)' },
+        { key: 'projects', label: 'Project Load', color: 'linear-gradient(90deg, #10b981, #14b8a6)' }
     ];
 
-    breakdownItems.forEach(item => {
+    breakdownItems.forEach((item, index) => {
         const value = breakdown[item.key] || 0;
         const div = document.createElement('div');
         div.className = 'breakdown-item';
@@ -391,28 +547,61 @@ function displayResults(result) {
         `;
         chart.appendChild(div);
 
-        // Animate the bar
+        // Animate the bar with stagger
         setTimeout(() => {
             div.querySelector('.breakdown-fill').style.width = value + '%';
-        }, 100);
+        }, 200 + index * 150);
     });
 
     // Causes
     const causesList = document.getElementById('causes-list');
     causesList.innerHTML = '';
-    (result.causes || []).forEach(cause => {
+    (result.causes || []).forEach((cause, index) => {
         const li = document.createElement('li');
         li.textContent = cause;
+        li.style.opacity = '0';
+        li.style.transform = 'translateX(-20px)';
         causesList.appendChild(li);
+
+        setTimeout(() => {
+            li.style.transition = 'all 0.4s ease';
+            li.style.opacity = '1';
+            li.style.transform = 'translateX(0)';
+        }, 300 + index * 100);
     });
 
     // Recommendations
     const recList = document.getElementById('recommendations-list');
     recList.innerHTML = '';
-    (result.recommendations || []).forEach(rec => {
+    (result.recommendations || []).forEach((rec, index) => {
         const li = document.createElement('li');
         li.textContent = rec;
+        li.style.opacity = '0';
+        li.style.transform = 'translateX(-20px)';
         recList.appendChild(li);
+
+        setTimeout(() => {
+            li.style.transition = 'all 0.4s ease';
+            li.style.opacity = '1';
+            li.style.transform = 'translateX(0)';
+        }, 300 + index * 100);
+    });
+}
+
+// Animate loading steps
+function animateLoadingSteps() {
+    const steps = document.querySelectorAll('.loading-step');
+    steps.forEach((step, index) => {
+        step.classList.remove('active');
+        step.querySelector('i').className = 'fas fa-circle';
+    });
+
+    steps.forEach((step, index) => {
+        setTimeout(() => {
+            steps.forEach(s => s.classList.remove('active'));
+            step.classList.add('active');
+            step.querySelector('i').className = 'fas fa-check-circle';
+        }, index * 1000);
     });
 }
 
@@ -421,6 +610,20 @@ function resetForm() {
     document.getElementById('sleep-range').value = 7;
     document.getElementById('sleep-display').textContent = '7';
 
+    // Reset sleep quality badge
+    const qualityBadge = document.querySelector('.sleep-quality-badge');
+    if (qualityBadge) {
+        const emoji = qualityBadge.querySelector('.quality-emoji');
+        const text = qualityBadge.querySelector('.quality-text');
+        if (emoji) emoji.textContent = '🙂';
+        if (text) {
+            text.textContent = 'Good';
+            text.style.color = '#10b981';
+        }
+        qualityBadge.style.background = 'rgba(16, 185, 129, 0.15)';
+        qualityBadge.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+    }
+
     ['subjects', 'exams', 'projects'].forEach(type => {
         const container = document.getElementById(`${type}-container`);
         const icons = {
@@ -428,13 +631,22 @@ function resetForm() {
             exams: 'fa-file-alt',
             projects: 'fa-project-diagram'
         };
+        const hints = {
+            subjects: 'Click "Add Subject" to get started',
+            exams: 'Click "Add Exam" to track deadlines',
+            projects: 'Click "Add Project" to track assignments'
+        };
         container.innerHTML = `
             <div class="empty-state">
-                <i class="fas ${icons[type]}"></i>
+                <div class="empty-icon">
+                    <i class="fas ${icons[type]}"></i>
+                </div>
                 <p>No ${type} added yet</p>
+                <span class="empty-hint">${hints[type]}</span>
             </div>
         `;
     });
 
     showInput();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
