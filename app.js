@@ -403,7 +403,7 @@ function initSleepSlider() {
     if (!slider || !display) return;
 
     const updateSleepQuality = (value) => {
-        display.textContent = value;
+        display.textContent = Number.isInteger(value) ? value : value.toFixed(1);
 
         if (!qualityBadge) return;
 
@@ -457,11 +457,11 @@ function initSleepSlider() {
     };
 
     slider.addEventListener('input', () => {
-        updateSleepQuality(parseInt(slider.value));
+        updateSleepQuality(parseFloat(slider.value));
     });
 
     // Initialize
-    updateSleepQuality(parseInt(slider.value));
+    updateSleepQuality(parseFloat(slider.value));
 }
 
 // Navigation functions with smooth transitions
@@ -648,7 +648,7 @@ function removeItem(id, type) {
 
 // Collect form data
 function collectFormData() {
-    const sleepHours = parseInt(document.getElementById('sleep-range').value) || 7;
+    const sleepHours = parseFloat(document.getElementById('sleep-range').value) || 7;
 
     const subjects = [];
     document.querySelectorAll('#subjects-container .form-item').forEach(item => {
