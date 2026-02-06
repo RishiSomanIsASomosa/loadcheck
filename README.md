@@ -5,6 +5,7 @@
   <img src="https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel">
   <img src="https://img.shields.io/badge/Groq-Llama_3.3-orange?style=for-the-badge&logo=meta&logoColor=white" alt="Groq AI">
   <img src="https://img.shields.io/badge/License-MIT-purple?style=for-the-badge" alt="License">
+  <img src="https://img.shields.io/badge/Updated-Feb%202026-blue?style=for-the-badge" alt="Updated">
 </p>
 
 <p align="center">
@@ -38,6 +39,7 @@
 ### 🎨 Luxury UI/UX Design
 - **Premium Dark Theme** - Elegant deep black backgrounds with muted gold accents
 - **Playfair Display Typography** - Sophisticated serif fonts for a luxury feel
+- **Animated Stat Counters** - Smooth easing animations with gradient gold text and glow effects
 - **Floating Animations** - Gentle floating icons and smooth hover effects
 - **Glow Pulse Effects** - Subtle pulsing glow on interactive elements
 - **Hover Lift Cards** - 3D lift effect on feature cards

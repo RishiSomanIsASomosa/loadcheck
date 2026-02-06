@@ -379,23 +379,8 @@ body:hover .cursor-dot {
     cursor: pointer;
 }
 
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background: var(--primary);
-    transition: width 0.4s var(--ease-luxury);
-}
-
 .nav-link:hover {
     color: var(--text-primary);
-}
-
-.nav-link:hover::after {
-    width: 100%;
 }
 
 .logo-icon {
@@ -433,6 +418,7 @@ body:hover .cursor-dot {
     transform: scaleX(0);
     transform-origin: right;
     transition: transform 0.4s var(--ease-out-expo);
+    opacity: 0;
 }
 
 .nav-link:hover {
@@ -442,6 +428,7 @@ body:hover .cursor-dot {
 .nav-link:hover::before {
     transform: scaleX(1);
     transform-origin: left;
+    opacity: 1;
 }
 
 .mobile-menu-btn {
@@ -1072,17 +1059,67 @@ body:hover .cursor-dot {
 .stat-number {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 3rem;
-    font-weight: 400;
-    color: var(--text-primary);
+    font-weight: 500;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 50%, var(--primary) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     line-height: 1;
     letter-spacing: -0.02em;
+    animation: statNumberShine 3s ease-in-out infinite;
+    text-shadow: 0 0 30px var(--primary-glow);
+    position: relative;
+}
+
+.stat-number::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    background: radial-gradient(ellipse at center, var(--primary-glow) 0%, transparent 70%);
+    opacity: 0;
+    filter: blur(15px);
+    z-index: -1;
+    transition: opacity 0.5s var(--ease-luxury);
+}
+
+.stat-item:hover .stat-number::after {
+    opacity: 1;
+}
+
+.stat-item:hover .stat-number {
+    animation: statNumberPulse 0.6s ease-out;
+}
+
+@keyframes statNumberShine {
+    0%, 100% {
+        background-position: 0% center;
+    }
+    50% {
+        background-position: 200% center;
+    }
+}
+
+@keyframes statNumberPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .stat-suffix {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.5rem;
-    font-weight: 400;
-    color: var(--primary);
+    font-weight: 500;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .stat-label {
@@ -1134,14 +1171,6 @@ body:hover .cursor-dot {
 .stat-content {
     display: flex;
     flex-direction: column;
-}
-
-.stat-number {
-    font-family: 'Sora', sans-serif;
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1;
 }
 
 .stat-plus {
@@ -5056,37 +5085,6 @@ section:nth-child(4) {
 
 section:nth-child(5) {
     animation-delay: 0.4s;
-}
-
-/* Stat Counter Animation */
-.stat-number {
-    transition: all 0.3s var(--ease-out-expo);
-}
-
-.stat-item:hover .stat-number {
-    transform: scale(1.1);
-    color: var(--primary);
-}
-
-/* Nav Link Hover Animation */
-.nav-link {
-    position: relative;
-}
-
-.nav-link::before {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 50%;
-    width: 0;
-    height: 1px;
-    background: var(--primary);
-    transition: all 0.4s var(--ease-out-expo);
-    transform: translateX(-50%);
-}
-
-.nav-link:hover::before {
-    width: 100%;
 }
 
 /* Button Arrow Animation */
