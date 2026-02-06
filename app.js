@@ -354,24 +354,24 @@ function initParticles() {
 // Animate stat counters with easing
 function animateCounters() {
     const counters = document.querySelectorAll('.counter');
-    
+
     const easeOutExpo = (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-    
+
     counters.forEach(counter => {
         const target = parseInt(counter.getAttribute('data-target')) || 0;
         if (target === 0) return;
 
         const duration = 2000;
         const startTime = performance.now();
-        
+
         const animateNumber = (currentTime) => {
             const elapsed = currentTime - startTime;
             const progress = Math.min(elapsed / duration, 1);
             const easedProgress = easeOutExpo(progress);
             const current = Math.floor(easedProgress * target);
-            
+
             counter.textContent = current.toLocaleString();
-            
+
             if (progress < 1) {
                 requestAnimationFrame(animateNumber);
             } else {
@@ -380,7 +380,7 @@ function animateCounters() {
                 counter.style.animation = 'statNumberPulse 0.4s ease-out';
             }
         };
-        
+
         // Use Intersection Observer to trigger animation when visible
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -390,7 +390,7 @@ function animateCounters() {
                 }
             });
         }, { threshold: 0.5 });
-        
+
         observer.observe(counter);
     });
 }

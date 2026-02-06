@@ -1092,9 +1092,12 @@ body:hover .cursor-dot {
 }
 
 @keyframes statNumberShine {
-    0%, 100% {
+
+    0%,
+    100% {
         background-position: 0% center;
     }
+
     50% {
         background-position: 200% center;
     }
@@ -1104,9 +1107,11 @@ body:hover .cursor-dot {
     0% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.1);
     }
+
     100% {
         transform: scale(1);
     }
