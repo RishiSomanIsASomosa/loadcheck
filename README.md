@@ -27,6 +27,15 @@
 
 ---
 
+## 📝 Recent Updates
+
+### v1.0.1 (Feb 2026)
+- ✅ Fixed sleep hours slider precision - now correctly handles decimal values (7.5, 8.5, etc.)
+- ✅ Fixed label alignment on sleep slider to match actual values
+- ✅ Deployed to Vercel with full production setup
+
+---
+
 ## ✨ Features
 
 ### 🎯 Core Features
