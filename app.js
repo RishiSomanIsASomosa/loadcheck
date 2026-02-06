@@ -49,6 +49,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize smooth reveal on sections
     initSectionReveals();
 
+    // Initialize 3D tilt cards
+    initTiltCards();
+
+    // Initialize text scramble effect
+    initTextScramble();
+
     // Handle form submission
     const form = document.getElementById('loadcheck-form');
     if (form) {
@@ -58,6 +64,87 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// 3D Tilt Card Effect
+function initTiltCards() {
+    const cards = document.querySelectorAll('.feature-card, .stat-item, .dashboard-preview');
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = (y - centerY) / 20;
+            const rotateY = (centerX - x) / 20;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+
+            // Add spotlight effect
+            const spotlight = card.querySelector('.card-spotlight') || createSpotlight(card);
+            spotlight.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(99, 102, 241, 0.15) 0%, transparent 50%)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            const spotlight = card.querySelector('.card-spotlight');
+            if (spotlight) spotlight.style.background = 'transparent';
+        });
+    });
+}
+
+function createSpotlight(card) {
+    const spotlight = document.createElement('div');
+    spotlight.className = 'card-spotlight';
+    spotlight.style.cssText = `
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        border-radius: inherit;
+        z-index: 1;
+        transition: background 0.3s ease;
+    `;
+    card.style.position = 'relative';
+    card.appendChild(spotlight);
+    return spotlight;
+}
+
+// Text scramble effect for hero title
+function initTextScramble() {
+    const gradientText = document.querySelector('.gradient-text');
+    if (!gradientText) return;
+
+    const originalText = gradientText.textContent;
+    const chars = '!<>-_\\/[]{}—=+*^?#________';
+
+    let frame = 0;
+    let frameRequest;
+
+    const scramble = () => {
+        if (frame < 20) {
+            gradientText.textContent = originalText
+                .split('')
+                .map((char, index) => {
+                    if (index < frame) return originalText[index];
+                    return chars[Math.floor(Math.random() * chars.length)];
+                })
+                .join('');
+            frame++;
+            frameRequest = requestAnimationFrame(scramble);
+        } else {
+            gradientText.textContent = originalText;
+        }
+    };
+
+    // Run scramble once on load
+    setTimeout(() => {
+        frame = 0;
+        scramble();
+    }, 1000);
+}
 
 // Scroll progress indicator
 function initScrollProgress() {

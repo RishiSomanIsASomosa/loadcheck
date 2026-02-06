@@ -35,15 +35,15 @@
 - **😴 Sleep Analysis** - Understand how your sleep patterns affect your stress levels
 - **📅 Deadline Clustering Detection** - Identifies when you have too many deadlines close together
 
-### 🎨 Premium UI/UX
-- **Glass-morphism Design** - Modern frosted glass effects throughout
-- **Animated Particles** - Dynamic floating particle background
-- **Cursor Glow Effect** - Interactive cursor trail with gradient glow
-- **Gradient Orbs** - Smooth floating gradient animations
-- **AOS Animations** - Scroll-triggered animations on all elements
-- **Interactive Timeline** - Visual journey with scroll-triggered progress
-- **Floating Shapes** - Geometric shapes with subtle animations
-- **Dark Theme** - Premium deep dark color scheme with purple/pink accents
+### 🎨 Luxury UI/UX Design
+- **Premium Dark Theme** - Elegant deep black backgrounds with muted gold accents
+- **Playfair Display Typography** - Sophisticated serif fonts for a luxury feel
+- **Floating Animations** - Gentle floating icons and smooth hover effects
+- **Glow Pulse Effects** - Subtle pulsing glow on interactive elements
+- **Hover Lift Cards** - 3D lift effect on feature cards
+- **Smooth Scroll Animations** - AOS-powered reveal animations
+- **Rounded Modern Cards** - Generous border radius for a soft, premium look
+- **Gold Gradient Accents** - Warm gold-to-bronze gradient highlights
 
 ---
 
@@ -138,8 +138,9 @@ Just visit **[loadcheck.vercel.app](https://loadcheck.vercel.app)** - no setup r
 | **AI Model** | Groq API with Llama 3.3-70b-versatile |
 | **Hosting** | Vercel |
 | **Animations** | AOS (Animate on Scroll), Custom CSS Keyframes |
-| **Fonts** | Sora (Headings) + Inter (Body) |
+| **Fonts** | Playfair Display (Headings) + Inter (Body) + Cormorant Garamond |
 | **Icons** | Font Awesome 6.4.0 |
+| **Design** | Luxury aesthetic inspired by premium real estate sites |
 
 ---
 
@@ -207,7 +208,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Vercel](https://vercel.com) for seamless deployment
 - [Font Awesome](https://fontawesome.com) for beautiful icons
 - [AOS](https://michalsnik.github.io/aos/) for scroll animations
-- [Google Fonts](https://fonts.google.com) for Plus Jakarta Sans
+- [Google Fonts](https://fonts.google.com) for Playfair Display, Inter, and Cormorant Garamond
+- Design inspired by luxury real estate aesthetics
 
 ---
 

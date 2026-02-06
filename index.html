@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -35,7 +35,7 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo" onclick="showLanding()">
-                <div class="logo-icon">
+                <div class="logo-icon float-animate">
                     <i class="fas fa-brain"></i>
                     <div class="logo-pulse"></div>
                     <div class="logo-ring"></div>
@@ -76,160 +76,79 @@
             <div class="hero-container">
                 <div class="hero-content">
                     <div class="hero-badge" data-aos="fade-up">
-                        <span class="badge-dot"></span>
-                        <span class="badge-text">AI-Powered Student Wellness Platform</span>
+                        <span class="badge-line"></span>
+                        <span class="badge-text">AI-Powered Wellness</span>
                     </div>
 
                     <h1 class="hero-title" data-aos="fade-up" data-aos-delay="200">
-                        <span class="title-line">Stop Burnout</span>
-                        <span class="title-line gradient-text" data-aos="fade-up" data-aos-delay="300">Before It
-                            Starts</span>
+                        <span class="title-line">Reclaim Your</span>
+                        <span class="title-line title-accent">Balance</span>
                     </h1>
 
                     <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="600">
-                        LoadCheck uses <span class="highlight-text">advanced AI</span> to analyze your study schedule,
-                        sleep patterns, and deadlines. Get instant burnout predictions and
-                        <span class="highlight-text">personalized wellness</span> recommendations.
+                        Intelligence-driven burnout prevention for the modern student.
+                        Analyze your patterns. Predict stress. <em>Thrive.</em>
                     </p>
 
                     <div class="hero-cta" data-aos="fade-up" data-aos-delay="800">
-                        <button class="btn btn-primary btn-lg ripple-btn magnetic-btn" onclick="showApp()">
-                            <span class="btn-content">
-                                <i class="fas fa-rocket"></i>
-                                <span>Start Free Analysis</span>
-                            </span>
-                            <span class="btn-shine"></span>
-                            <span class="btn-glow-effect"></span>
+                        <button class="btn btn-elegant magnetic-btn ripple glow-animate" onclick="showApp()">
+                            <span class="btn-text">Begin Analysis</span>
+                            <span class="btn-line"></span>
                         </button>
-                        <button class="btn btn-glass btn-lg hover-lift" onclick="scrollToSection('how-it-works')">
-                            <i class="fas fa-play-circle"></i>
-                            <span>Watch Demo</span>
+                        <button class="btn btn-outline magnetic-btn ripple" onclick="scrollToSection('how-it-works')">
+                            <span class="btn-text">Explore</span>
+                            <i class="fas fa-arrow-down btn-icon"></i>
                         </button>
                     </div>
 
                     <div class="hero-stats" data-aos="fade-up" data-aos-delay="1000">
-                        <div class="stat-item hover-lift">
-                            <div class="stat-icon-mini"><i class="fas fa-users"></i></div>
-                            <div class="stat-content">
+                        <div class="stat-item scale-hover">
+                            <div class="stat-icon-mini float-animate"><i class="fas fa-users"></i></div>
+                            <div class="stat-value">
                                 <span class="stat-number counter" data-target="10000">0</span>
-                                <span class="stat-plus">+</span>
-                                <span class="stat-label">Students Helped</span>
+                                <span class="stat-suffix">+</span>
                             </div>
+                            <span class="stat-label">Students Helped</span>
                         </div>
                         <div class="stat-divider"></div>
-                        <div class="stat-item hover-lift">
-                            <div class="stat-icon-mini"><i class="fas fa-bullseye"></i></div>
-                            <div class="stat-content">
+                        <div class="stat-item scale-hover">
+                            <div class="stat-icon-mini float-animate"><i class="fas fa-bullseye"></i></div>
+                            <div class="stat-value">
                                 <span class="stat-number counter" data-target="95">0</span>
-                                <span class="stat-plus">%</span>
-                                <span class="stat-label">Accuracy Rate</span>
+                                <span class="stat-suffix">%</span>
                             </div>
+                            <span class="stat-label">Accuracy Rate</span>
                         </div>
                         <div class="stat-divider"></div>
-                        <div class="stat-item hover-lift">
-                            <div class="stat-icon-mini"><i class="fas fa-star"></i></div>
-                            <div class="stat-content">
+                        <div class="stat-item scale-hover">
+                            <div class="stat-icon-mini float-animate"><i class="fas fa-star"></i></div>
+                            <div class="stat-value">
                                 <span class="stat-number">4.9</span>
-                                <span class="stat-plus">★</span>
-                                <span class="stat-label">User Rating</span>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="hero-trusted" data-aos="fade-up" data-aos-delay="1200">
-                        <span class="trusted-label">Trusted by students worldwide</span>
-                        <div class="trusted-logos">
-                            <span class="trusted-logo">MIT</span>
-                            <span class="trusted-logo">Stanford</span>
-                            <span class="trusted-logo">Harvard</span>
-                            <span class="trusted-logo">Berkeley</span>
+                            <span class="stat-label">User Rating</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="hero-visual" data-aos="fade-left" data-aos-duration="1200">
+                <div class="hero-visual" data-aos="fade-up" data-aos-duration="1200">
                     <div class="dashboard-preview">
-                        <div class="preview-glow"></div>
-                        <div class="preview-border-glow"></div>
-                        <div class="preview-header">
-                            <div class="preview-dots">
-                                <span class="dot red"></span>
-                                <span class="dot yellow"></span>
-                                <span class="dot green"></span>
-                            </div>
-                            <span class="preview-title">
-                                <i class="fas fa-chart-pie"></i>
-                                Burnout Risk Analysis
-                            </span>
-                            <div class="preview-live-badge">
-                                <span class="live-dot"></span>
-                                Live
-                            </div>
-                        </div>
-                        <div class="preview-content">
+                        <div class="preview-inner">
                             <div class="preview-meter">
                                 <svg class="meter-svg" viewBox="0 0 100 100">
-                                    <defs>
-                                        <linearGradient id="meterGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                            <stop offset="0%" style="stop-color:#10b981" />
-                                            <stop offset="50%" style="stop-color:#6366f1" />
-                                            <stop offset="100%" style="stop-color:#10b981" />
-                                        </linearGradient>
-                                    </defs>
                                     <circle class="meter-bg" cx="50" cy="50" r="40" />
                                     <circle class="meter-progress" cx="50" cy="50" r="40" />
                                 </svg>
                                 <div class="meter-center">
-                                    <span class="meter-value" data-value="32">32</span>
+                                    <span class="meter-value">32</span>
                                     <span class="meter-label">Low Risk</span>
                                 </div>
-                                <div class="meter-particles"></div>
                             </div>
-                            <div class="preview-bars">
-                                <div class="preview-bar-item">
-                                    <div class="bar-info"><i class="fas fa-book bar-icon-pro"></i><span>Homework
-                                            Load</span>
-                                    </div>
-                                    <div class="bar-track">
-                                        <div class="bar-fill" style="--width: 65%; --color: var(--primary);"></div>
-                                    </div>
-                                    <span class="bar-value">65%</span>
-                                </div>
-                                <div class="preview-bar-item">
-                                    <div class="bar-info"><i class="fas fa-file-alt bar-icon-pro"></i><span>Exam
-                                            Stress</span></div>
-                                    <div class="bar-track">
-                                        <div class="bar-fill" style="--width: 40%; --color: var(--warning);"></div>
-                                    </div>
-                                    <span class="bar-value">40%</span>
-                                </div>
-                                <div class="preview-bar-item">
-                                    <div class="bar-info"><i class="fas fa-moon bar-icon-pro"></i><span>Sleep
-                                            Quality</span>
-                                    </div>
-                                    <div class="bar-track">
-                                        <div class="bar-fill" style="--width: 80%; --color: var(--success);"></div>
-                                    </div>
-                                    <span class="bar-value">80%</span>
-                                </div>
-                            </div>
-                            <div class="preview-ai-badge">
-                                <div class="ai-typing-indicator">
-                                    <span></span><span></span><span></span>
-                                </div>
-                                <span>AI Analyzing...</span>
+                            <div class="preview-info">
+                                <span class="preview-title">Your Wellness Score</span>
+                                <p class="preview-desc">AI-analyzed burnout prediction based on your current patterns
+                                </p>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Floating Cards -->
-                    <div class="floating-card card-1" data-aos="fade-up" data-aos-delay="1400">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Analysis Complete!</span>
-                    </div>
-                    <div class="floating-card card-2" data-aos="fade-up" data-aos-delay="1600">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>100% Private</span>
                     </div>
                 </div>
             </div>
@@ -245,10 +164,10 @@
                 </div>
 
                 <div class="features-grid">
-                    <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="100">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
-                            <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                            <div class="feature-icon glow-animate"><i class="fas fa-brain"></i></div>
                             <h3>AI-Powered Analysis</h3>
                             <p>Advanced algorithms analyze your workload patterns and predict burnout risk with 95%
                                 accuracy.</p>
@@ -259,10 +178,10 @@
                         </div>
                     </div>
 
-                    <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="200">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
-                            <div class="feature-icon warning"><i class="fas fa-bolt"></i></div>
+                            <div class="feature-icon warning glow-animate"><i class="fas fa-bolt"></i></div>
                             <h3>Real-Time Insights</h3>
                             <p>Get instant feedback on your academic load and receive timely recommendations.</p>
                             <div class="feature-link">
@@ -272,10 +191,10 @@
                         </div>
                     </div>
 
-                    <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="300">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
-                            <div class="feature-icon success"><i class="fas fa-heart"></i></div>
+                            <div class="feature-icon success glow-animate"><i class="fas fa-heart"></i></div>
                             <h3>Wellness Focused</h3>
                             <p>Personalized tips for sleep, study habits, and stress management tailored to you.</p>
                             <div class="feature-link">
@@ -285,10 +204,10 @@
                         </div>
                     </div>
 
-                    <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="400">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
-                            <div class="feature-icon danger"><i class="fas fa-shield-alt"></i></div>
+                            <div class="feature-icon danger glow-animate"><i class="fas fa-shield-alt"></i></div>
                             <h3>100% Private</h3>
                             <p>Your data is analyzed in real-time and never stored. Complete privacy guaranteed.</p>
                             <div class="feature-link">
@@ -298,10 +217,10 @@
                         </div>
                     </div>
 
-                    <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="500">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
-                            <div class="feature-icon info"><i class="fas fa-chart-line"></i></div>
+                            <div class="feature-icon info glow-animate"><i class="fas fa-chart-line"></i></div>
                             <h3>Smart Tracking</h3>
                             <p>Monitor your workload trends over time and identify patterns before they become problems.
                             </p>
@@ -312,10 +231,10 @@
                         </div>
                     </div>
 
-                    <div class="feature-card glass-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="600">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
-                            <div class="feature-icon purple"><i class="fas fa-calendar-check"></i></div>
+                            <div class="feature-icon purple glow-animate"><i class="fas fa-calendar-check"></i></div>
                             <h3>Deadline Aware</h3>
                             <p>Intelligent scheduling suggestions based on your upcoming exams and project due dates.
                             </p>
