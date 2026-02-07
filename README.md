@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel">
   <img src="https://img.shields.io/badge/Groq-Llama_3.3-orange?style=for-the-badge&logo=meta&logoColor=white" alt="Groq AI">
   <img src="https://img.shields.io/badge/License-MIT-purple?style=for-the-badge" alt="License">
-  <img src="https://img.shields.io/badge/Updated-Feb%202026-blue?style=for-the-badge" alt="Updated">
+  <img src="https://img.shields.io/badge/Updated-Jun%202025-blue?style=for-the-badge" alt="Updated">
 </p>
 
 <p align="center">
@@ -29,10 +29,23 @@
 
 ## 📝 Recent Updates
 
-### v1.0.1 (Feb 2026)
-- ✅ Fixed sleep hours slider precision - now correctly handles decimal values (7.5, 8.5, etc.)
-- ✅ Fixed label alignment on sleep slider to match actual values
+### v1.1.0 (Jun 2025)
+- ✅ Fixed AI avatar icon visibility — z-index layering fix for Font Awesome icon
+- ✅ Added missing Sora font import to Google Fonts
+- ✅ Fixed wildcard CSS transition glitch — scoped to interactive elements only
+- ✅ Removed conflicting section opacity animation that fought with AOS
+- ✅ Fixed glass-card hover lift applying to form cards
+- ✅ Added client-side fallback analysis when API is unavailable
+- ✅ Added real-time form progress bar tracking with MutationObserver
+- ✅ Fixed breakdown bar animation (force reflow technique)
+- ✅ Slowed loading animation to 4.5s minimum display time
+- ✅ Fixed emoji overlapping score in risk circle — resized elements
 - ✅ Deployed to Vercel with full production setup
+
+### v1.0.1 (Feb 2025)
+- ✅ Fixed sleep hours slider precision — now correctly handles decimal values (7.5, 8.5, etc.)
+- ✅ Fixed label alignment on sleep slider to match actual values
+- ✅ Initial Vercel deployment
 
 ---
 
@@ -44,6 +57,8 @@
 - **📊 Detailed Breakdown** - Visual analysis of homework, exams, projects, and sleep impact
 - **😴 Sleep Analysis** - Understand how your sleep patterns affect your stress levels
 - **📅 Deadline Clustering Detection** - Identifies when you have too many deadlines close together
+- **🔄 Offline Fallback** - Client-side analysis works even when the API is unavailable
+- **📈 Real-Time Progress Tracking** - Form progress bar updates as you fill in your data
 
 ### 🎨 Luxury UI/UX Design
 - **Premium Dark Theme** - Elegant deep black backgrounds with muted gold accents
@@ -149,7 +164,7 @@ Just visit **[loadcheck.vercel.app](https://loadcheck.vercel.app)** - no setup r
 | **AI Model** | Groq API with Llama 3.3-70b-versatile |
 | **Hosting** | Vercel |
 | **Animations** | AOS (Animate on Scroll), Custom CSS Keyframes |
-| **Fonts** | Playfair Display (Headings) + Inter (Body) + Cormorant Garamond |
+| **Fonts** | Playfair Display (Headings) + Inter (Body) + Cormorant Garamond + Sora |
 | **Icons** | Font Awesome 6.4.0 |
 | **Design** | Luxury aesthetic inspired by premium real estate sites |
 
