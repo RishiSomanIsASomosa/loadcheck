@@ -30,6 +30,13 @@
 
 ## 📝 Recent Updates
 
+### v2.1.0 (Feb 2026) — Stability & Deployment Fix
+- 🐛 **Fixed critical GSAP crash** — `gsap.fromTo()` called with 2 args instead of 3 caused "Cannot set properties of undefined (setting 'parent')" on analysis
+- 🐛 **Fixed counter animation** — Replaced fragile `this.targets()[0]` pattern with closure-based object references
+- 🐛 **Fixed race condition** — `showResults()` now returns a Promise; `displayResults()` waits for the results section to be fully visible before animating
+- 🛡️ **Added null-safety** — All DOM element references in `displayResults()` are null-checked to prevent crashes on missing elements
+- 🚀 **Redeployed to Vercel** — Production build at [loadcheck.vercel.app](https://loadcheck.vercel.app)
+
 ### v2.0.0 (Feb 2026) — Premium Animation Overhaul
 - 🎬 **GSAP + ScrollTrigger** — All scroll animations now powered by GSAP for buttery-smooth reveals
 - 🧈 **Lenis Smooth Scroll** — Hardware-accelerated smooth scrolling across the entire page

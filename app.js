@@ -633,10 +633,11 @@ function animateCounters() {
             start: 'top 85%',
             once: true,
             onEnter: () => {
-                gsap.to({ val: 0 }, {
+                const obj = { val: 0 };
+                gsap.to(obj, {
                     val: target, duration: 2, ease: 'power2.out',
-                    onUpdate: function () { counter.textContent = Math.floor(this.targets()[0].val).toLocaleString(); },
-                    onComplete: function () { counter.textContent = target.toLocaleString(); }
+                    onUpdate: () => { counter.textContent = Math.floor(obj.val).toLocaleString(); },
+                    onComplete: () => { counter.textContent = target.toLocaleString(); }
                 });
             }
         });
@@ -762,17 +763,24 @@ function showInput() {
 }
 
 function showResults() {
-    const inputSection = document.getElementById('input-section');
-    const resultsSection = document.getElementById('results-section');
+    return new Promise((resolve) => {
+        const inputSection = document.getElementById('input-section');
+        const resultsSection = document.getElementById('results-section');
 
-    gsap.to(inputSection, {
-        opacity: 0, y: -30, duration: 0.4, ease: 'power3.inOut',
-        onComplete: () => {
-            inputSection.classList.add('hidden');
-            gsap.set(inputSection, { clearProps: 'all' });
-            resultsSection.classList.remove('hidden');
-            gsap.fromTo(resultsSection, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' });
-        }
+        if (!inputSection || !resultsSection) { resolve(); return; }
+
+        gsap.to(inputSection, {
+            opacity: 0, y: -30, duration: 0.4, ease: 'power3.inOut',
+            onComplete: () => {
+                inputSection.classList.add('hidden');
+                gsap.set(inputSection, { clearProps: 'all' });
+                resultsSection.classList.remove('hidden');
+                gsap.fromTo(resultsSection, { opacity: 0, y: 40 }, {
+                    opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
+                    onComplete: resolve
+                });
+            }
+        });
     });
 }
 
@@ -1076,9 +1084,7 @@ async function analyzeWorkload() {
         await new Promise(resolve => setTimeout(resolve, remaining));
 
         // Show results section FIRST so DOM elements are available for GSAP
-        showResults();
-        // Small delay so the section is rendered before animating contents
-        await new Promise(resolve => setTimeout(resolve, 50));
+        await showResults();
         displayResults(result);
     } catch (err) {
         alert('Error analyzing workload: ' + err.message);
@@ -1092,18 +1098,22 @@ async function analyzeWorkload() {
 // ============================================
 
 function displayResults(result) {
-    const score = result.risk_score;
-    const level = result.risk_level;
+    const score = result.risk_score || 0;
+    const level = result.risk_level || 'low';
 
     const scoreEl = document.getElementById('risk-score');
-    gsap.fromTo({ val: 0 }, { val: score, duration: 1.5, ease: 'power2.out', onUpdate: function () { scoreEl.textContent = Math.round(this.targets()[0].val); } });
+    if (scoreEl) {
+        const counter = { val: 0 };
+        gsap.to(counter, { val: score, duration: 1.5, ease: 'power2.out', onUpdate: () => { scoreEl.textContent = Math.round(counter.val); } });
+        scoreEl.style.color = level === 'low' ? '#10b981' : level === 'medium' ? '#f59e0b' : '#ef4444';
+    }
 
     const progress = document.getElementById('risk-progress');
-    const offset = 534 - (score / 100) * 534;
-    gsap.to(progress, { strokeDashoffset: offset, duration: 1.5, ease: 'power3.out', delay: 0.3 });
-
-    progress.style.stroke = level === 'low' ? 'url(#riskGradientLow)' : level === 'medium' ? 'url(#riskGradientMedium)' : 'url(#riskGradientHigh)';
-    scoreEl.style.color = level === 'low' ? '#10b981' : level === 'medium' ? '#f59e0b' : '#ef4444';
+    if (progress) {
+        const offset = 534 - (score / 100) * 534;
+        gsap.to(progress, { strokeDashoffset: offset, duration: 1.5, ease: 'power3.out', delay: 0.3 });
+        progress.style.stroke = level === 'low' ? 'url(#riskGradientLow)' : level === 'medium' ? 'url(#riskGradientMedium)' : 'url(#riskGradientHigh)';
+    }
 
     const indicatorMarker = document.querySelector('.indicator-marker');
     if (indicatorMarker) gsap.to(indicatorMarker, { left: score + '%', duration: 1.2, ease: 'power3.out', delay: 0.3 });
@@ -1112,26 +1122,31 @@ function displayResults(result) {
     const labels = { low: 'Low Risk', medium: 'Medium Risk', high: 'High Risk' };
     const summaries = { low: 'Great balance! You\'re managing your workload well.', medium: 'Watch out! Your workload is getting heavy.', high: 'Take action! You\'re at risk of burnout.' };
 
-    document.getElementById('risk-emoji').textContent = emojis[level];
+    const emojiEl = document.getElementById('risk-emoji');
+    if (emojiEl) emojiEl.textContent = emojis[level];
     const badge = document.getElementById('risk-badge');
-    badge.textContent = labels[level];
-    badge.className = 'risk-badge ' + level;
-    document.getElementById('risk-label').textContent = labels[level];
-    document.getElementById('risk-summary').textContent = summaries[level];
+    if (badge) { badge.textContent = labels[level]; badge.className = 'risk-badge ' + level; }
+    const labelEl = document.getElementById('risk-label');
+    if (labelEl) labelEl.textContent = labels[level];
+    const summaryEl = document.getElementById('risk-summary');
+    if (summaryEl) summaryEl.textContent = summaries[level];
 
     // AI recommendation with typing effect
     const aiMsg = document.getElementById('ai-message');
-    const fullText = result.ai_recommendation || 'Keep up the good work!';
-    aiMsg.textContent = '';
-    let charIndex = 0;
-    const typeChar = () => {
-        if (charIndex < fullText.length) { aiMsg.textContent += fullText[charIndex]; charIndex++; setTimeout(typeChar, 20 + Math.random() * 30); }
-    };
-    setTimeout(typeChar, 500);
+    if (aiMsg) {
+        const fullText = result.ai_recommendation || 'Keep up the good work!';
+        aiMsg.textContent = '';
+        let charIndex = 0;
+        const typeChar = () => {
+            if (charIndex < fullText.length) { aiMsg.textContent += fullText[charIndex]; charIndex++; setTimeout(typeChar, 20 + Math.random() * 30); }
+        };
+        setTimeout(typeChar, 500);
+    }
 
     // Breakdown chart
     const breakdown = result.breakdown || {};
     const chart = document.getElementById('breakdown-chart');
+    if (!chart) return;
     chart.innerHTML = '';
 
     [
@@ -1151,6 +1166,7 @@ function displayResults(result) {
     // Causes & Recommendations
     ['causes-list', 'recommendations-list'].forEach(listId => {
         const list = document.getElementById(listId);
+        if (!list) return;
         list.innerHTML = '';
         const items = listId === 'causes-list' ? (result.causes || []) : (result.recommendations || []);
         items.forEach((text, index) => {
