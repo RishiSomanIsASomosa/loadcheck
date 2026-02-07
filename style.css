@@ -3172,27 +3172,28 @@ input[type="range"]::-webkit-slider-thumb:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 0;
 }
 
 .risk-emoji {
-    font-size: 2.5rem;
-    margin-bottom: var(--space-2);
-    animation: icon-bounce 3s ease-in-out infinite;
+    font-size: 1.6rem;
+    line-height: 1;
+    margin-bottom: 4px;
 }
 
 .risk-score {
     font-family: 'Sora', sans-serif;
-    font-size: 4rem;
+    font-size: 3.2rem;
     font-weight: 700;
     line-height: 1;
 }
 
 .risk-score-label {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-top: var(--space-2);
+    margin-top: 4px;
 }
 
 .risk-details {
@@ -3324,6 +3325,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
     border-radius: var(--radius-xl);
     opacity: 0.4;
     animation: ring-spin 15s linear infinite;
+    z-index: 0;
 }
 
 .ai-avatar-pulse {
@@ -3331,7 +3333,14 @@ input[type="range"]::-webkit-slider-thumb:hover {
     inset: 0;
     background: var(--gradient-purple-pink);
     border-radius: var(--radius-lg);
-    animation: logo-pulse 3s ease-in-out infinite;
+    animation: glow-pulse 3s ease-in-out infinite;
+    z-index: 0;
+    opacity: 0.4;
+}
+
+.ai-avatar i {
+    position: relative;
+    z-index: 1;
 }
 
 .ai-header-text {
@@ -3624,7 +3633,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
     width: 0;
     background: var(--gradient-purple-pink);
     border-radius: var(--radius-full);
-    animation: loading-fill 3s var(--ease-out-expo) forwards;
+    animation: loading-fill 4.5s var(--ease-out-expo) forwards;
     box-shadow: 0 0 20px var(--primary-glow);
 }
 
@@ -3633,16 +3642,24 @@ input[type="range"]::-webkit-slider-thumb:hover {
         width: 0;
     }
 
-    20% {
-        width: 25%;
+    15% {
+        width: 15%;
     }
 
-    50% {
-        width: 60%;
+    35% {
+        width: 35%;
     }
 
-    80% {
-        width: 85%;
+    55% {
+        width: 55%;
+    }
+
+    75% {
+        width: 78%;
+    }
+
+    90% {
+        width: 92%;
     }
 
     100% {
@@ -4066,7 +4083,7 @@ input[type="range"]::-webkit-slider-thumb:hover {
     }
 }
 
-.glass-card:hover {
+#landing-page .glass-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), 0 0 40px var(--primary-glow);
     border-color: rgba(99, 102, 241, 0.3);
@@ -4636,9 +4653,17 @@ textarea:focus {
     }
 }
 
-/* Smooth Color Transitions */
-* {
-    transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+/* Smooth Color Transitions - scoped to interactive elements only */
+a,
+button,
+input,
+select,
+.btn,
+.card,
+.nav-link,
+.feature-card,
+.stat-card {
+    transition-property: background-color, border-color, color, box-shadow, transform;
     transition-duration: 0.15s;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -5055,43 +5080,8 @@ textarea:focus {
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
 }
 
-/* Smooth Section Transitions */
-section {
-    opacity: 0;
-    animation: section-reveal 1s var(--ease-out-expo) forwards;
-}
-
-@keyframes section-reveal {
-    0% {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-section:nth-child(1) {
-    animation-delay: 0s;
-}
-
-section:nth-child(2) {
-    animation-delay: 0.1s;
-}
-
-section:nth-child(3) {
-    animation-delay: 0.2s;
-}
-
-section:nth-child(4) {
-    animation-delay: 0.3s;
-}
-
-section:nth-child(5) {
-    animation-delay: 0.4s;
-}
+/* Smooth Section Transitions - handled by AOS and initSectionReveals */
+/* Removed conflicting opacity:0 animation that hid sections */
 
 /* Button Arrow Animation */
 .btn-icon {

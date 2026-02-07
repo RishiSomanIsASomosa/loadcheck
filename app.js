@@ -28,6 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize sleep slider
     initSleepSlider();
 
+    // Initialize form progress tracking
+    initFormProgress();
+
     // Initialize timeline animation
     initTimelineAnimation();
 
@@ -395,6 +398,61 @@ function animateCounters() {
     });
 }
 
+// Form progress tracking
+let _progressDebounce = null;
+function initFormProgress() {
+    // Use MutationObserver to detect when items are added/removed
+    const containers = ['subjects-container', 'exams-container', 'projects-container'];
+    const observer = new MutationObserver(() => {
+        clearTimeout(_progressDebounce);
+        _progressDebounce = setTimeout(updateFormProgress, 50);
+    });
+    containers.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el, { childList: true, subtree: true });
+    });
+
+    // Also track sleep slider changes
+    const sleepSlider = document.getElementById('sleep-range');
+    if (sleepSlider) sleepSlider.addEventListener('input', updateFormProgress);
+
+    // Initial update
+    updateFormProgress();
+}
+
+function updateFormProgress() {
+    const steps = document.querySelectorAll('.progress-step');
+    const fill = document.getElementById('form-progress-fill');
+    if (!steps.length || !fill) return;
+
+    const sleepSlider = document.getElementById('sleep-range');
+    const hasSubjects = document.querySelectorAll('#subjects-container .form-item').length > 0;
+    const hasExams = document.querySelectorAll('#exams-container .form-item').length > 0;
+    const hasProjects = document.querySelectorAll('#projects-container .form-item').length > 0;
+
+    // Sleep is always "completed" since it has a default value
+    const sleepTouched = sleepSlider && sleepSlider.value !== '7';
+    const sectionsDone = [true, hasSubjects, hasExams, hasProjects]; // sleep always counts
+    const completedCount = sectionsDone.filter(Boolean).length;
+
+    steps.forEach((step, i) => {
+        step.classList.remove('active', 'completed');
+        if (sectionsDone[i]) {
+            step.classList.add('completed');
+        }
+    });
+
+    // Mark the first incomplete as active
+    const firstIncomplete = sectionsDone.indexOf(false);
+    if (firstIncomplete !== -1) {
+        steps[firstIncomplete].classList.add('active');
+    }
+
+    // Update progress bar width
+    const percent = (completedCount / 4) * 100;
+    fill.style.width = percent + '%';
+}
+
 // Sleep slider
 function initSleepSlider() {
     const slider = document.getElementById('sleep-range');
@@ -567,6 +625,7 @@ function addSubject() {
         </button>
     `;
     container.appendChild(div);
+    updateFormProgress();
 }
 
 function addExam() {
@@ -591,6 +650,7 @@ function addExam() {
         </button>
     `;
     container.appendChild(div);
+    updateFormProgress();
 }
 
 function addProject() {
@@ -611,6 +671,7 @@ function addProject() {
         </button>
     `;
     container.appendChild(div);
+    updateFormProgress();
 }
 
 function removeItem(id, type) {
@@ -643,7 +704,8 @@ function removeItem(id, type) {
                 </div>
             `;
         }
-    }, 300);
+        updateFormProgress();
+    }, 350);
 }
 
 // Collect form data
@@ -697,6 +759,100 @@ function collectFormData() {
     };
 }
 
+// Client-side workload analysis (fallback when API unavailable)
+function analyzeWorkloadLocally(data) {
+    const weights = { homework: 1.5, exams: 3.0, projects: 2.0, sleep_deficit: 2.5, deadline_clustering: 2.0 };
+    const scores = { homework: 0, exams: 0, projects: 0, sleep_deficit: 0, deadline_clustering: 0 };
+    const today = new Date();
+
+    // Homework load
+    const subjects = data.subjects || [];
+    const totalHours = subjects.reduce((sum, s) => sum + (s.hours_per_week || 0), 0);
+    scores.homework = Math.min(totalHours * weights.homework, 30);
+
+    // Exam stress
+    const exams = data.upcoming_exams || [];
+    for (const exam of exams) {
+        try {
+            const examDate = new Date(exam.date);
+            const daysUntil = Math.floor((examDate - today) / (1000 * 60 * 60 * 24));
+            if (daysUntil >= 0 && daysUntil <= 14) {
+                const diffValue = exam.type || 'medium';
+                const diff = { quiz: 0.5, midterm: 1.0, final: 1.5 }[diffValue] || 1.0;
+                const urgency = Math.max(0, (14 - daysUntil) / 14);
+                scores.exams += urgency * weights.exams * diff * 5;
+            }
+        } catch (e) { }
+    }
+    scores.exams = Math.min(scores.exams, 30);
+
+    // Project load
+    const projects = data.projects || [];
+    for (const project of projects) {
+        try {
+            const deadline = new Date(project.deadline);
+            const daysUntil = Math.floor((deadline - today) / (1000 * 60 * 60 * 24));
+            if (daysUntil >= 0 && daysUntil <= 21) {
+                const urgency = Math.max(0, (21 - daysUntil) / 21);
+                scores.projects += urgency * weights.projects * 5;
+            }
+        } catch (e) { }
+    }
+    scores.projects = Math.min(scores.projects, 25);
+
+    // Sleep deficit
+    const sleepHours = data.sleep_hours || 8;
+    if (sleepHours < 7) {
+        scores.sleep_deficit = (7 - sleepHours) * weights.sleep_deficit * 3;
+    }
+    scores.sleep_deficit = Math.min(scores.sleep_deficit, 20);
+
+    // Deadline clustering
+    const allDeadlines = [];
+    exams.forEach(e => { try { allDeadlines.push(new Date(e.date)); } catch (err) { } });
+    projects.forEach(p => { try { allDeadlines.push(new Date(p.deadline)); } catch (err) { } });
+    allDeadlines.sort((a, b) => a - b);
+    let clusterPenalty = 0;
+    for (let i = 0; i < allDeadlines.length - 1; i++) {
+        const daysApart = Math.floor((allDeadlines[i + 1] - allDeadlines[i]) / (1000 * 60 * 60 * 24));
+        if (daysApart <= 3) clusterPenalty += (4 - daysApart) * weights.deadline_clustering;
+    }
+    scores.deadline_clustering = Math.min(clusterPenalty, 15);
+
+    let totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
+    totalScore = Math.min(Math.max(totalScore, 0), 100);
+    totalScore = Math.round(totalScore * 10) / 10;
+
+    const riskLevel = totalScore <= 30 ? 'low' : totalScore <= 60 ? 'medium' : 'high';
+
+    const causes = [];
+    const recommendations = [];
+    if (scores.homework > 15) { causes.push('Heavy homework load across subjects'); recommendations.push('Prioritize assignments by due date and importance'); }
+    if (scores.exams > 15) { causes.push('Multiple upcoming exams creating pressure'); recommendations.push('Create a study schedule with active recall techniques'); }
+    if (scores.projects > 12) { causes.push('Project deadlines approaching'); recommendations.push('Break projects into smaller milestones'); }
+    if (scores.sleep_deficit > 8) { causes.push('Insufficient sleep affecting performance'); recommendations.push('Aim for 7-8 hours of sleep for better focus'); }
+    if (scores.deadline_clustering > 8) { causes.push('Multiple deadlines clustered together'); recommendations.push('Talk to professors about deadline flexibility'); }
+    if (causes.length === 0) { causes.push('Workload is manageable'); recommendations.push('Keep up the good work!'); }
+
+    return {
+        risk_score: totalScore,
+        risk_level: riskLevel,
+        breakdown: {
+            sleep: Math.round(scores.sleep_deficit * 5),
+            study: Math.round(scores.homework * 3.3),
+            exams: Math.round(scores.exams * 3.3),
+            projects: Math.round(scores.projects * 4)
+        },
+        causes,
+        recommendations,
+        ai_recommendation: riskLevel === 'high'
+            ? 'Your workload is quite heavy right now. Focus on your most urgent deadline first, and try to get at least 7 hours of sleep tonight. You\'ve got this! 💪'
+            : riskLevel === 'medium'
+                ? 'You\'re juggling a decent amount. Consider blocking out focused study sessions and taking short breaks to stay sharp. Keep going! 🌟'
+                : 'Great balance! You\'re managing your workload well. Keep maintaining healthy habits and stay consistent. 😊'
+    };
+}
+
 // Analyze workload
 async function analyzeWorkload() {
     const data = collectFormData();
@@ -711,18 +867,40 @@ async function analyzeWorkload() {
     document.getElementById('loading').classList.remove('hidden');
     animateLoadingSteps();
 
+    // Minimum loading time so users can enjoy the animation
+    const minLoadTime = 4500;
+    const startTime = Date.now();
+
     try {
-        const response = await fetch('/api/analyze', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
+        let result;
 
-        const result = await response.json();
+        try {
+            const response = await fetch('/api/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
 
-        if (result.error) {
-            throw new Error(result.error);
+            const contentType = response.headers.get('content-type') || '';
+            if (!contentType.includes('application/json')) {
+                throw new Error('NOT_JSON');
+            }
+
+            result = await response.json();
+
+            if (result.error) {
+                throw new Error(result.error);
+            }
+        } catch (apiErr) {
+            // Fallback to client-side analysis
+            console.warn('API unavailable, using local analysis:', apiErr.message);
+            result = analyzeWorkloadLocally(data);
         }
+
+        // Wait remaining time so loading animation plays fully
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, minLoadTime - elapsed);
+        await new Promise(resolve => setTimeout(resolve, remaining));
 
         displayResults(result);
         showResults();
@@ -803,22 +981,25 @@ function displayResults(result) {
     ];
 
     breakdownItems.forEach((item, index) => {
-        const value = breakdown[item.key] || 0;
+        const value = Math.min(breakdown[item.key] || 0, 100);
         const div = document.createElement('div');
         div.className = 'breakdown-item';
         div.innerHTML = `
             <span class="breakdown-label">${item.label}</span>
             <div class="breakdown-bar">
-                <div class="breakdown-fill" style="width: 0; background: ${item.color};"></div>
+                <div class="breakdown-fill" style="width: 0%; background: ${item.color}; transition: none;"></div>
             </div>
             <span class="breakdown-value">${value}%</span>
         `;
         chart.appendChild(div);
 
-        // Animate the bar with stagger
-        setTimeout(() => {
-            div.querySelector('.breakdown-fill').style.width = value + '%';
-        }, 200 + index * 150);
+        // Force layout reflow before enabling transition & animating
+        requestAnimationFrame(() => {
+            const fill = div.querySelector('.breakdown-fill');
+            fill.offsetWidth; // force reflow
+            fill.style.transition = 'width 1.5s cubic-bezier(0.16, 1, 0.3, 1)';
+            fill.style.width = value + '%';
+        });
     });
 
     // Causes
@@ -859,18 +1040,31 @@ function displayResults(result) {
 // Animate loading steps
 function animateLoadingSteps() {
     const steps = document.querySelectorAll('.loading-step');
-    steps.forEach((step, index) => {
+    steps.forEach((step) => {
         step.classList.remove('active');
         step.querySelector('i').className = 'fas fa-circle';
     });
 
     steps.forEach((step, index) => {
         setTimeout(() => {
-            steps.forEach(s => s.classList.remove('active'));
+            // Mark previous steps as completed (keep them checked)
+            for (let i = 0; i < index; i++) {
+                steps[i].classList.add('active');
+                steps[i].querySelector('i').className = 'fas fa-check-circle';
+            }
+            // Current step is active
             step.classList.add('active');
-            step.querySelector('i').className = 'fas fa-check-circle';
-        }, index * 1000);
+            step.querySelector('i').className = 'fas fa-spinner fa-spin';
+        }, index * 1400);
     });
+
+    // Final step: mark all as completed
+    setTimeout(() => {
+        steps.forEach(s => {
+            s.classList.add('active');
+            s.querySelector('i').className = 'fas fa-check-circle';
+        });
+    }, steps.length * 1400);
 }
 
 // Reset form
