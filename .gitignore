@@ -1,6 +1,12 @@
 # Environment variables
 .env
 
+# Node
+node_modules/
+
+# Backup files
+app.old.js
+
 # Python
 __pycache__/
 *.py[cod]

@@ -4,8 +4,9 @@
   <img src="https://img.shields.io/badge/Node.js-18+-green?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
   <img src="https://img.shields.io/badge/Vercel-Deployed-black?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel">
   <img src="https://img.shields.io/badge/Groq-Llama_3.3-orange?style=for-the-badge&logo=meta&logoColor=white" alt="Groq AI">
+  <img src="https://img.shields.io/badge/GSAP-3.12-88CE02?style=for-the-badge&logo=greensock&logoColor=white" alt="GSAP">
   <img src="https://img.shields.io/badge/License-MIT-purple?style=for-the-badge" alt="License">
-  <img src="https://img.shields.io/badge/Updated-Jun%202025-blue?style=for-the-badge" alt="Updated">
+  <img src="https://img.shields.io/badge/Updated-Feb%202026-blue?style=for-the-badge" alt="Updated">
 </p>
 
 <p align="center">
@@ -28,6 +29,22 @@
 ---
 
 ## 📝 Recent Updates
+
+### v2.0.0 (Feb 2026) — Premium Animation Overhaul
+- 🎬 **GSAP + ScrollTrigger** — All scroll animations now powered by GSAP for buttery-smooth reveals
+- 🧈 **Lenis Smooth Scroll** — Hardware-accelerated smooth scrolling across the entire page
+- ✨ **Preloader** — Elegant character-by-character text reveal with progress counter
+- 🎠 **Infinite Marquee** — Auto-scrolling keyword ticker with hover pause
+- 🃏 **3D Tilt Cards** — Interactive perspective tilt with spotlight gradient on hover
+- 🧲 **Magnetic Buttons** — Cursor-following buttons with elastic snap-back
+- 📜 **Timeline Parallax** — Scroll-scrubbed progress line with staggered item reveals
+- 🔤 **Text Scramble** — Hacker-style text decode effect on gradient headings
+- 📊 **Animated Counters** — ScrollTrigger-powered number count-ups
+- 🎭 **Clip-Path Reveals** — Section titles reveal with cinematic clip-path wipes
+- 🌊 **Parallax Orbs** — Mouse-tracking gradient orbs in the hero section
+- 🔁 **Smooth Page Transitions** — GSAP timeline transitions between landing/app pages
+- 🐛 Fixed AOS + GSAP animation conflicts (removed duplicate data-aos attributes)
+- 🐛 Fixed CSS `transition: all` fighting GSAP transforms on cards
 
 ### v1.1.0 (Jun 2025)
 - ✅ Fixed AI avatar icon visibility — z-index layering fix for Font Awesome icon
@@ -60,16 +77,19 @@
 - **🔄 Offline Fallback** - Client-side analysis works even when the API is unavailable
 - **📈 Real-Time Progress Tracking** - Form progress bar updates as you fill in your data
 
-### 🎨 Luxury UI/UX Design
-- **Premium Dark Theme** - Elegant deep black backgrounds with muted gold accents
-- **Playfair Display Typography** - Sophisticated serif fonts for a luxury feel
-- **Animated Stat Counters** - Smooth easing animations with gradient gold text and glow effects
-- **Floating Animations** - Gentle floating icons and smooth hover effects
-- **Glow Pulse Effects** - Subtle pulsing glow on interactive elements
-- **Hover Lift Cards** - 3D lift effect on feature cards
-- **Smooth Scroll Animations** - AOS-powered reveal animations
-- **Rounded Modern Cards** - Generous border radius for a soft, premium look
-- **Gold Gradient Accents** - Warm gold-to-bronze gradient highlights
+### 🎨 Premium Animated UI/UX
+- **Luxury Dark Theme** — Elegant deep black backgrounds with muted gold accents
+- **GSAP ScrollTrigger Animations** — Buttery-smooth scroll-triggered reveals, clip-path wipes, staggered entrances
+- **Lenis Smooth Scroll** — Hardware-accelerated smooth scrolling (1.2s eased)
+- **Cinematic Preloader** — Character reveal + progress counter before page entry
+- **3D Tilt Cards** — Perspective-shifting cards with spotlight gradient on hover
+- **Magnetic Buttons** — Cursor-following buttons with elastic snap-back
+- **Infinite Marquee** — Auto-scrolling keyword ticker with hover pause
+- **Parallax Effects** — Mouse-tracking gradient orbs + scroll-driven depth layers
+- **Text Scramble** — Hacker-style decode effect on gradient headings
+- **Animated Counters** — ScrollTrigger-powered number count-ups
+- **Playfair Display Typography** — Sophisticated serif fonts for a luxury feel
+- **Gold Gradient Accents** — Warm gold-to-bronze gradient highlights
 
 ---
 
@@ -163,10 +183,10 @@ Just visit **[loadcheck.vercel.app](https://loadcheck.vercel.app)** - no setup r
 | **Backend** | Node.js (Vercel Serverless Functions) |
 | **AI Model** | Groq API with Llama 3.3-70b-versatile |
 | **Hosting** | Vercel |
-| **Animations** | AOS (Animate on Scroll), Custom CSS Keyframes |
+| **Animations** | GSAP 3.12 + ScrollTrigger, Lenis Smooth Scroll, AOS (secondary) |
 | **Fonts** | Playfair Display (Headings) + Inter (Body) + Cormorant Garamond + Sora |
 | **Icons** | Font Awesome 6.4.0 |
-| **Design** | Luxury aesthetic inspired by premium real estate sites |
+| **Design** | Modern Bakery-inspired luxury aesthetic with premium scroll animations |
 
 ---
 
@@ -232,10 +252,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - [Groq](https://groq.com) for blazing fast AI inference
 - [Vercel](https://vercel.com) for seamless deployment
+- [GSAP](https://greensock.com/gsap/) for professional-grade animations
+- [Lenis](https://lenis.studiofreight.com/) for buttery smooth scrolling
 - [Font Awesome](https://fontawesome.com) for beautiful icons
-- [AOS](https://michalsnik.github.io/aos/) for scroll animations
+- [AOS](https://michalsnik.github.io/aos/) for complementary scroll animations
 - [Google Fonts](https://fonts.google.com) for Playfair Display, Inter, and Cormorant Garamond
-- Design inspired by luxury real estate aesthetics
+- Animation style inspired by [Modern Bakery](https://www.modernbakery.com/) premium web aesthetics
 
 ---
 
