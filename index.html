@@ -15,9 +15,69 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Preloader styles - inline for instant display */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: #0a0a0a;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .preloader.done {
+            pointer-events: none;
+        }
+
+        .preloader-text {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 400;
+            color: #f5f5f0;
+            overflow: hidden;
+        }
+
+        .preloader-text span {
+            display: inline-block;
+            transform: translateY(110%);
+        }
+
+        .preloader-line {
+            width: 0;
+            height: 1px;
+            background: #c9a96e;
+        }
+
+        .preloader-counter {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            color: rgba(245, 245, 240, 0.5);
+            text-transform: uppercase;
+        }
+
+        /* Hide everything behind preloader until loaded */
+        body:not(.loaded)>*:not(.preloader) {
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+    </style>
 </head>
 
 <body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-text" id="preloader-text">
+            <span>L</span><span>o</span><span>a</span><span>d</span><span>C</span><span>h</span><span>e</span><span>c</span><span>k</span>
+        </div>
+        <div class="preloader-line" id="preloader-line"></div>
+        <div class="preloader-counter" id="preloader-counter">0%</div>
+    </div>
+
     <!-- Noise Overlay -->
     <div class="noise-overlay"></div>
 
@@ -75,22 +135,22 @@
 
             <div class="hero-container">
                 <div class="hero-content">
-                    <div class="hero-badge" data-aos="fade-up">
+                    <div class="hero-badge">
                         <span class="badge-line"></span>
                         <span class="badge-text">AI-Powered Wellness</span>
                     </div>
 
-                    <h1 class="hero-title" data-aos="fade-up" data-aos-delay="200">
+                    <h1 class="hero-title">
                         <span class="title-line">Reclaim Your</span>
                         <span class="title-line title-accent">Balance</span>
                     </h1>
 
-                    <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="600">
+                    <p class="hero-subtitle">
                         Intelligence-driven burnout prevention for the modern student.
                         Analyze your patterns. Predict stress. <em>Thrive.</em>
                     </p>
 
-                    <div class="hero-cta" data-aos="fade-up" data-aos-delay="800">
+                    <div class="hero-cta">
                         <button class="btn btn-elegant magnetic-btn ripple glow-animate" onclick="showApp()">
                             <span class="btn-text">Begin Analysis</span>
                             <span class="btn-line"></span>
@@ -101,7 +161,7 @@
                         </button>
                     </div>
 
-                    <div class="hero-stats" data-aos="fade-up" data-aos-delay="1000">
+                    <div class="hero-stats">
                         <div class="stat-item scale-hover">
                             <div class="stat-icon-mini float-animate"><i class="fas fa-users"></i></div>
                             <div class="stat-value">
@@ -130,7 +190,7 @@
                     </div>
                 </div>
 
-                <div class="hero-visual" data-aos="fade-up" data-aos-duration="1200">
+                <div class="hero-visual">
                     <div class="dashboard-preview">
                         <div class="preview-inner">
                             <div class="preview-meter">
@@ -157,14 +217,14 @@
         <!-- Features Section -->
         <section class="features" id="features">
             <div class="container">
-                <div class="section-header" data-aos="fade-up">
+                <div class="section-header">
                     <span class="section-badge"><i class="fas fa-star"></i> Features</span>
                     <h2 class="section-title">Why Students Love <span class="gradient-text">LoadCheck</span></h2>
                     <p class="section-subtitle">Powerful features designed to help you succeed</p>
                 </div>
 
                 <div class="features-grid">
-                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card glass-card hover-lift">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
                             <div class="feature-icon glow-animate"><i class="fas fa-brain"></i></div>
@@ -178,7 +238,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card glass-card hover-lift">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
                             <div class="feature-icon warning glow-animate"><i class="fas fa-bolt"></i></div>
@@ -191,7 +251,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card glass-card hover-lift">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
                             <div class="feature-icon success glow-animate"><i class="fas fa-heart"></i></div>
@@ -204,7 +264,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-card glass-card hover-lift">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
                             <div class="feature-icon danger glow-animate"><i class="fas fa-shield-alt"></i></div>
@@ -217,7 +277,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-card glass-card hover-lift">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
                             <div class="feature-icon info glow-animate"><i class="fas fa-chart-line"></i></div>
@@ -231,7 +291,7 @@
                         </div>
                     </div>
 
-                    <div class="feature-card glass-card hover-lift" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-card glass-card hover-lift">
                         <div class="feature-card-inner">
                             <div class="feature-glow"></div>
                             <div class="feature-icon purple glow-animate"><i class="fas fa-calendar-check"></i></div>
@@ -251,14 +311,14 @@
         <!-- How It Works -->
         <section class="how-it-works" id="how-it-works">
             <div class="container">
-                <div class="section-header" data-aos="fade-up">
+                <div class="section-header">
                     <span class="section-badge"><i class="fas fa-cog"></i> Process</span>
                     <h2 class="section-title">How It <span class="gradient-text">Works</span></h2>
                     <p class="section-subtitle">Three simple steps to better academic wellness</p>
                 </div>
 
                 <div class="steps-container">
-                    <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-card">
                         <div class="step-number">01</div>
                         <div class="step-icon-wrapper">
                             <div class="step-icon"><i class="fas fa-edit"></i></div>
@@ -274,7 +334,7 @@
                         <i class="fas fa-chevron-right"></i>
                     </div>
 
-                    <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-card">
                         <div class="step-number">02</div>
                         <div class="step-icon-wrapper">
                             <div class="step-icon warning"><i class="fas fa-cogs"></i></div>
@@ -290,7 +350,7 @@
                         <i class="fas fa-chevron-right"></i>
                     </div>
 
-                    <div class="step-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="step-card">
                         <div class="step-number">03</div>
                         <div class="step-icon-wrapper">
                             <div class="step-icon success"><i class="fas fa-chart-line"></i></div>
@@ -307,7 +367,7 @@
         <!-- Timeline Section -->
         <section class="timeline-section" id="timeline">
             <div class="container">
-                <div class="section-header" data-aos="fade-up">
+                <div class="section-header">
                     <span class="section-badge">YOUR JOURNEY</span>
                     <h2 class="section-title">From Input to <span class="gradient-text">Insight</span></h2>
                     <p class="section-subtitle">Follow your path to better academic wellness</p>
@@ -318,7 +378,7 @@
                         <div class="timeline-progress"></div>
                     </div>
 
-                    <div class="timeline-item" data-aos="fade-right" data-aos-delay="100">
+                    <div class="timeline-item">
                         <div class="timeline-marker">
                             <div class="marker-dot"></div>
                             <div class="marker-pulse"></div>
@@ -336,7 +396,7 @@
                         </div>
                     </div>
 
-                    <div class="timeline-item right" data-aos="fade-left" data-aos-delay="200">
+                    <div class="timeline-item right">
                         <div class="timeline-marker">
                             <div class="marker-dot"></div>
                             <div class="marker-pulse"></div>
@@ -353,7 +413,7 @@
                         </div>
                     </div>
 
-                    <div class="timeline-item" data-aos="fade-right" data-aos-delay="300">
+                    <div class="timeline-item">
                         <div class="timeline-marker">
                             <div class="marker-dot"></div>
                             <div class="marker-pulse"></div>
@@ -370,7 +430,7 @@
                         </div>
                     </div>
 
-                    <div class="timeline-item right" data-aos="fade-left" data-aos-delay="400">
+                    <div class="timeline-item right">
                         <div class="timeline-marker">
                             <div class="marker-dot"></div>
                             <div class="marker-pulse"></div>
@@ -390,10 +450,38 @@
             </div>
         </section>
 
+        <!-- Marquee Section -->
+        <section class="marquee-section">
+            <div class="marquee-track">
+                <div class="marquee-content">
+                    <span class="marquee-item">AI-Powered</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Burnout Prevention</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Wellness Analytics</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Smart Insights</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Student Success</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">AI-Powered</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Burnout Prevention</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Wellness Analytics</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Smart Insights</span>
+                    <span class="marquee-dot"></span>
+                    <span class="marquee-item">Student Success</span>
+                    <span class="marquee-dot"></span>
+                </div>
+            </div>
+        </section>
+
         <!-- Stats Section -->
         <section class="stats-section">
             <div class="container">
-                <div class="stats-grid" data-aos="fade-up">
+                <div class="stats-grid">
                     <div class="stat-card glass-card">
                         <div class="stat-icon"><i class="fas fa-brain"></i></div>
                         <div class="stat-big-number counter" data-target="50000">0</div>
@@ -425,7 +513,7 @@
         <!-- CTA Section -->
         <section class="cta-section">
             <div class="container">
-                <div class="cta-card glass-card" data-aos="zoom-in">
+                <div class="cta-card glass-card">
                     <div class="cta-bg">
                         <div class="cta-orb cta-orb-1"></div>
                         <div class="cta-orb cta-orb-2"></div>
@@ -859,6 +947,9 @@
     </div>
 
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="app.js"></script>
 </body>
 

@@ -112,8 +112,25 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     scroll-padding-top: 100px;
+}
+
+html.lenis,
+html.lenis body {
+    height: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+    overflow: hidden;
 }
 
 body {
@@ -1764,7 +1781,7 @@ body:hover .cursor-dot {
     border: 1px solid var(--border);
     border-radius: var(--radius-xl);
     padding: var(--space-10);
-    transition: all 0.6s var(--ease-luxury);
+    transition: border-color 0.6s var(--ease-luxury), box-shadow 0.6s var(--ease-luxury), background 0.6s var(--ease-luxury);
     position: relative;
     overflow: hidden;
 }
@@ -2133,7 +2150,7 @@ body:hover .cursor-dot {
     border-radius: var(--radius-xl);
     padding: var(--space-8);
     position: relative;
-    transition: all 0.5s var(--ease-out-expo);
+    transition: border-color 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo), background 0.5s var(--ease-out-expo);
     backdrop-filter: blur(10px);
 }
 
@@ -2152,7 +2169,6 @@ body:hover .cursor-dot {
 
 .timeline-item:hover .timeline-content {
     border-color: var(--border-accent);
-    transform: translateY(-8px);
     box-shadow: 0 30px 60px rgba(99, 102, 241, 0.15);
 }
 
@@ -4177,7 +4193,7 @@ section {
 /* Feature Card Enhanced Hover */
 .feature-card {
     position: relative;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    transition: border-color 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1), background 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .feature-card::after {
@@ -4206,19 +4222,10 @@ section {
     transform: translateX(8px);
 }
 
-/* Timeline Enhanced Animations */
-.timeline-item {
-    opacity: 1;
-    transform: translateX(0);
-}
+/* Timeline Enhanced Animations - Let GSAP handle initial states */
 
 .timeline-content {
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.timeline-item:hover .timeline-content {
-    transform: translateY(-5px);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    transition: border-color 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1), background 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .timeline-marker {
@@ -5107,4 +5114,266 @@ select,
     background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-elevated) 50%, var(--bg-surface) 75%);
     background-size: 200% 100%;
     animation: skeleton-loading 1.5s infinite;
+}
+
+/* ============================================
+   MODERN BAKERY-INSPIRED ANIMATIONS
+   ============================================ */
+
+/* Clip-path reveal for sections */
+.gsap-reveal {
+    clip-path: inset(0 0 100% 0);
+    will-change: clip-path;
+}
+
+.gsap-reveal.revealed {
+    clip-path: inset(0 0 0% 0);
+}
+
+/* Smooth text split animation */
+.split-text .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%) rotateX(-80deg);
+    transform-origin: center top;
+    will-change: transform, opacity;
+}
+
+.split-text .word {
+    display: inline-block;
+    overflow: hidden;
+    margin-right: 0.3em;
+}
+
+/* Hero text reveal with clip */
+.hero-text-reveal {
+    overflow: hidden;
+}
+
+.hero-text-reveal>* {
+    transform: translateY(120%);
+    will-change: transform;
+}
+
+/* Stagger reveal for grid items */
+.gsap-stagger-item {
+    opacity: 0;
+    transform: translateY(60px);
+    will-change: transform, opacity;
+}
+
+/* Section wipe reveal */
+.section-wipe {
+    position: relative;
+    overflow: hidden;
+}
+
+.section-wipe::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bg-base);
+    transform-origin: top;
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* Image reveal mask */
+.img-reveal {
+    overflow: hidden;
+}
+
+.img-reveal>* {
+    transform: scale(1.3);
+    will-change: transform;
+}
+
+/* ============================================
+   MARQUEE / INFINITE SCROLL SECTION
+   ============================================ */
+
+.marquee-section {
+    padding: var(--space-12) 0;
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-elevated);
+    position: relative;
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+}
+
+.marquee-content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-10);
+    padding-right: var(--space-10);
+    animation: marquee-scroll 30s linear infinite;
+    will-change: transform;
+}
+
+.marquee-item {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 3rem);
+    font-weight: 400;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    transition: color 0.5s var(--ease-luxury);
+    -webkit-text-stroke: 0;
+}
+
+.marquee-item:hover {
+    color: var(--primary);
+}
+
+.marquee-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--primary);
+    border-radius: 50%;
+    flex-shrink: 0;
+    opacity: 0.5;
+}
+
+@keyframes marquee-scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* ============================================
+   GSAP SCROLL-TRIGGERED PARALLAX
+   ============================================ */
+
+.parallax-depth-1 {
+    will-change: transform;
+}
+
+.parallax-depth-2 {
+    will-change: transform;
+}
+
+.parallax-depth-3 {
+    will-change: transform;
+}
+
+/* ============================================
+   SMOOTH HORIZONTAL LINE REVEAL
+   ============================================ */
+
+.line-reveal {
+    width: 0;
+    height: 1px;
+    background: var(--primary);
+    will-change: width;
+}
+
+.line-reveal.vertical {
+    width: 1px;
+    height: 0;
+    will-change: height;
+}
+
+/* ============================================
+   ENHANCED SECTION HEADERS WITH GSAP
+   ============================================ */
+
+.section-header .section-badge {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.section-header .section-title {
+    overflow: hidden;
+}
+
+.section-header .section-subtitle {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* ============================================
+   ENHANCED PAGE TRANSITIONS
+   ============================================ */
+
+.page-transition-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-base);
+    z-index: 9998;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    will-change: transform;
+    pointer-events: none;
+}
+
+/* ============================================
+   SMOOTH CARD HOVER DEPTH
+   ============================================ */
+
+.feature-card,
+.stat-card,
+.step-card,
+.timeline-content {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* ============================================
+   ENHANCED FOOTER REVEAL
+   ============================================ */
+
+.footer {
+    position: relative;
+}
+
+.footer-brand,
+.footer-links-column {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* ============================================
+   ENHANCED STAT CARD COUNTER
+   ============================================ */
+
+.stat-card .stat-big-number {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 0.6s var(--ease-luxury);
+}
+
+/* ============================================
+   CTA SECTION ENHANCED
+   ============================================ */
+
+.cta-card {
+    opacity: 0;
+    transform: scale(0.92);
+    will-change: transform, opacity;
+}
+
+/* ============================================
+   SMOOTH NAVBAR REVEAL
+   ============================================ */
+
+.navbar .nav-logo,
+.navbar .nav-link,
+.navbar .btn {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+/* Body visible state after preloader */
+body.loaded .navbar .nav-logo,
+body.loaded .navbar .nav-link,
+body.loaded .navbar .btn {
+    /* These will be animated by GSAP */
 }
