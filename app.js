@@ -949,6 +949,12 @@ function removeItem(id, type) {
             gsap.fromTo(container.querySelector('.empty-state'), { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, ease: 'power3.out' });
         }
         updateFormProgress();
+
+        // Auto-trigger analysis after removing an item (only if there's still data)
+        const data = collectFormData();
+        if (data.subjects.length > 0 || data.upcoming_exams.length > 0 || data.projects.length > 0) {
+            analyzeWorkload();
+        }
     }, 450);
 }
 
