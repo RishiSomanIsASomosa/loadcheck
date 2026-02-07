@@ -1,4 +1,4 @@
-# 🧠 LoadCheck - AI Student Burnout Prevention
+#   🧠 LoadCheck - AI Student Burnout Prevention
 
 <p align="center">
   <img src="https://img.shields.io/badge/Node.js-18+-green?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js">
