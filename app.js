@@ -1046,6 +1046,7 @@ function analyzeWorkloadLocally(data) {
 
     return {
         risk_score: totalScore, risk_level: riskLevel,
+        sleep_hours: data.sleep_hours || 7,
         breakdown: { sleep: Math.round(scores.sleep_deficit * 5), study: Math.round(scores.homework * 3.3), exams: Math.round(scores.exams * 3.3), projects: Math.round(scores.projects * 4) },
         causes, recommendations,
         ai_recommendation: riskLevel === 'high' ? 'Your workload is quite heavy right now. Focus on your most urgent deadline first, and try to get at least 7 hours of sleep tonight. You\'ve got this! 💪'
@@ -1106,17 +1107,57 @@ async function analyzeWorkload() {
 function displayResults(result) {
     const score = result.risk_score || 0;
     const level = result.risk_level || 'low';
+    const sleepHours = result.sleep_hours || 7;
+    
+    // Calculate sleep score (0-100, higher is better)
+    const sleepScore = Math.min(100, Math.max(0, Math.round((sleepHours / 9) * 100)));
+    const sleepLevel = sleepHours >= 7 ? 'good' : sleepHours >= 5 ? 'ok' : 'bad';
 
+    // Animate Sleep Score
+    const sleepScoreEl = document.getElementById('sleep-score');
+    if (sleepScoreEl) {
+        const counter = { val: 0 };
+        gsap.to(counter, { 
+            val: sleepScore, 
+            duration: 1.5, 
+            ease: 'power2.out', 
+            onUpdate: () => { sleepScoreEl.textContent = Math.round(counter.val); } 
+        });
+    }
+
+    const sleepProgress = document.getElementById('sleep-progress');
+    if (sleepProgress) {
+        const offset = 471 - (sleepScore / 100) * 471;
+        gsap.to(sleepProgress, { strokeDashoffset: offset, duration: 1.5, ease: 'power3.out', delay: 0.2 });
+        sleepProgress.style.stroke = sleepLevel === 'good' ? 'url(#sleepGradientGood)' : sleepLevel === 'ok' ? 'url(#sleepGradientOk)' : 'url(#sleepGradientBad)';
+    }
+
+    const sleepEmoji = document.getElementById('sleep-emoji');
+    if (sleepEmoji) {
+        sleepEmoji.textContent = sleepLevel === 'good' ? '😴' : sleepLevel === 'ok' ? '😪' : '😵';
+    }
+
+    const sleepLabel = document.getElementById('sleep-label');
+    if (sleepLabel) {
+        sleepLabel.textContent = sleepLevel === 'good' ? 'Great Sleep!' : sleepLevel === 'ok' ? 'Could Be Better' : 'Needs Improvement';
+        sleepLabel.style.color = sleepLevel === 'good' ? '#10b981' : sleepLevel === 'ok' ? '#f59e0b' : '#ef4444';
+    }
+
+    const sleepHoursDisplay = document.getElementById('sleep-hours-display');
+    if (sleepHoursDisplay) {
+        sleepHoursDisplay.innerHTML = `<i class="fas fa-clock"></i> ${sleepHours} hours/night`;
+    }
+
+    // Animate Risk Score
     const scoreEl = document.getElementById('risk-score');
     if (scoreEl) {
         const counter = { val: 0 };
         gsap.to(counter, { val: score, duration: 1.5, ease: 'power2.out', onUpdate: () => { scoreEl.textContent = Math.round(counter.val); } });
-        scoreEl.style.color = level === 'low' ? '#10b981' : level === 'medium' ? '#f59e0b' : '#ef4444';
     }
 
     const progress = document.getElementById('risk-progress');
     if (progress) {
-        const offset = 534 - (score / 100) * 534;
+        const offset = 471 - (score / 100) * 471;
         gsap.to(progress, { strokeDashoffset: offset, duration: 1.5, ease: 'power3.out', delay: 0.3 });
         progress.style.stroke = level === 'low' ? 'url(#riskGradientLow)' : level === 'medium' ? 'url(#riskGradientMedium)' : 'url(#riskGradientHigh)';
     }
@@ -1133,7 +1174,10 @@ function displayResults(result) {
     const badge = document.getElementById('risk-badge');
     if (badge) { badge.textContent = labels[level]; badge.className = 'risk-badge ' + level; }
     const labelEl = document.getElementById('risk-label');
-    if (labelEl) labelEl.textContent = labels[level];
+    if (labelEl) { 
+        labelEl.textContent = labels[level]; 
+        labelEl.style.color = level === 'low' ? '#10b981' : level === 'medium' ? '#f59e0b' : '#ef4444';
+    }
     const summaryEl = document.getElementById('risk-summary');
     if (summaryEl) summaryEl.textContent = summaries[level];
 

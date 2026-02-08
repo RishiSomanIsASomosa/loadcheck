@@ -161,6 +161,7 @@ module.exports = async (req, res) => {
             success: true,
             risk_score: analysis.score,
             risk_level: analysis.risk_level,
+            sleep_hours: data.sleep_hours || 7,
             breakdown: {
                 sleep: Math.round(analysis.breakdown.sleep_deficit * 5),
                 study: Math.round(analysis.breakdown.homework * 3.3),

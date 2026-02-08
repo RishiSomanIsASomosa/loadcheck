@@ -775,15 +775,57 @@
                     </div>
                 </div>
 
-                <!-- Risk Overview -->
-                <div class="card glass-card result-hero" data-aos="zoom-in">
-                    <div class="result-hero-bg">
-                        <div class="result-orb result-orb-1"></div>
-                        <div class="result-orb result-orb-2"></div>
+                <!-- Dual Score Overview -->
+                <div class="dual-score-grid">
+                    <!-- Sleep Score -->
+                    <div class="card glass-card score-card" data-aos="zoom-in">
+                        <div class="score-card-bg">
+                            <div class="score-orb score-orb-1"></div>
+                        </div>
+                        <div class="score-header">
+                            <i class="fas fa-moon"></i>
+                            <span>Sleep Score</span>
+                        </div>
+                        <div class="score-circle-wrapper">
+                            <svg class="score-circle" viewBox="0 0 200 200">
+                                <defs>
+                                    <linearGradient id="sleepGradientGood" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#6366f1" />
+                                        <stop offset="100%" style="stop-color:#8b5cf6" />
+                                    </linearGradient>
+                                    <linearGradient id="sleepGradientOk" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#f59e0b" />
+                                        <stop offset="100%" style="stop-color:#f97316" />
+                                    </linearGradient>
+                                    <linearGradient id="sleepGradientBad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#ef4444" />
+                                        <stop offset="100%" style="stop-color:#dc2626" />
+                                    </linearGradient>
+                                </defs>
+                                <circle class="score-bg" cx="100" cy="100" r="75" />
+                                <circle class="score-progress" id="sleep-progress" cx="100" cy="100" r="75" />
+                            </svg>
+                            <div class="score-center">
+                                <span class="score-emoji" id="sleep-emoji">😴</span>
+                                <span class="score-value" id="sleep-score">0</span>
+                                <span class="score-unit">/ 100</span>
+                            </div>
+                        </div>
+                        <div class="score-label" id="sleep-label">Calculating...</div>
+                        <div class="score-hours" id="sleep-hours-display"><i class="fas fa-clock"></i> -- hours/night</div>
                     </div>
-                    <div class="risk-overview">
-                        <div class="risk-circle-wrapper">
-                            <svg class="risk-circle" viewBox="0 0 200 200">
+
+                    <!-- Stress/Risk Score -->
+                    <div class="card glass-card score-card risk-score-card" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="score-card-bg">
+                            <div class="score-orb score-orb-2"></div>
+                        </div>
+                        <div class="score-header">
+                            <i class="fas fa-brain"></i>
+                            <span>Burnout Risk</span>
+                        </div>
+                        <div class="score-circle-wrapper">
+                            <svg class="score-circle" viewBox="0 0 200 200">
                                 <defs>
                                     <linearGradient id="riskGradientLow" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" style="stop-color:#10b981" />
@@ -805,32 +847,34 @@
                                         </feMerge>
                                     </filter>
                                 </defs>
-                                <circle class="risk-bg" cx="100" cy="100" r="85" />
-                                <circle class="risk-progress" id="risk-progress" cx="100" cy="100" r="85"
-                                    filter="url(#glow)" />
+                                <circle class="score-bg" cx="100" cy="100" r="75" />
+                                <circle class="score-progress risk-progress" id="risk-progress" cx="100" cy="100" r="75" filter="url(#glow)" />
                             </svg>
-                            <div class="risk-center">
-                                <span class="risk-emoji" id="risk-emoji">😊</span>
-                                <span class="risk-score" id="risk-score">0</span>
-                                <span class="risk-score-label">Risk Score</span>
+                            <div class="score-center">
+                                <span class="score-emoji" id="risk-emoji">😊</span>
+                                <span class="score-value" id="risk-score">0</span>
+                                <span class="score-unit">/ 100</span>
                             </div>
-                            <div class="risk-particles"></div>
                         </div>
-                        <div class="risk-details">
-                            <span class="risk-badge" id="risk-badge">Analyzing...</span>
-                            <h2 id="risk-label">Calculating...</h2>
-                            <p id="risk-summary">Please wait...</p>
-                            <div class="risk-indicator">
-                                <div class="indicator-bar">
-                                    <div class="indicator-fill" id="indicator-fill"></div>
-                                    <div class="indicator-marker" id="indicator-marker"></div>
-                                </div>
-                                <div class="indicator-labels">
-                                    <span>Low</span>
-                                    <span>Medium</span>
-                                    <span>High</span>
-                                </div>
-                            </div>
+                        <div class="score-label" id="risk-label">Calculating...</div>
+                        <span class="risk-badge" id="risk-badge">Analyzing...</span>
+                    </div>
+                </div>
+
+                <!-- Summary Card -->
+                <div class="card glass-card summary-card" data-aos="fade-up">
+                    <div class="summary-content">
+                        <p id="risk-summary">Analyzing your workload...</p>
+                    </div>
+                    <div class="risk-indicator">
+                        <div class="indicator-bar">
+                            <div class="indicator-fill" id="indicator-fill"></div>
+                            <div class="indicator-marker" id="indicator-marker"></div>
+                        </div>
+                        <div class="indicator-labels">
+                            <span>Low</span>
+                            <span>Medium</span>
+                            <span>High</span>
                         </div>
                     </div>
                 </div>
