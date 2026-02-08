@@ -24,6 +24,10 @@
             "dest": "/api/analyze.js"
         },
         {
+            "src": "/api/chat",
+            "dest": "/api/chat.js"
+        },
+        {
             "src": "/style.css",
             "dest": "/style.css"
         },

@@ -1285,3 +1285,197 @@ document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('loadcheck-form');
     if (form) form.addEventListener('submit', (e) => { e.preventDefault(); analyzeWorkload(); });
 });
+// ============================================
+// AI CHATBOT FUNCTIONALITY
+// ============================================
+
+// Store current analysis result for chat context
+let currentAnalysisResult = null;
+let chatHistory = [];
+let floatingChatHistory = [];
+
+// Store analysis result when displaying results
+const originalDisplayResults = typeof displayResults === 'function' ? displayResults : null;
+
+// Toggle floating chatbot
+function toggleFloatingChat() {
+    const chatbot = document.getElementById('floating-chatbot');
+    if (chatbot) {
+        chatbot.classList.toggle('open');
+    }
+}
+
+// Handle keypress in chat input
+function handleChatKeypress(event) {
+    if (event.key === 'Enter') {
+        sendChatMessage();
+    }
+}
+
+function handleFloatingChatKeypress(event) {
+    if (event.key === 'Enter') {
+        sendFloatingChatMessage();
+    }
+}
+
+// Add message to chat
+function addChatMessage(containerId, message, isUser = false) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-message ${isUser ? 'user-message' : 'ai-message'}`;
+    
+    messageDiv.innerHTML = `
+        <div class="message-avatar">
+            <i class="fas ${isUser ? 'fa-user' : 'fa-robot'}"></i>
+        </div>
+        <div class="message-content">
+            <p>${message}</p>
+        </div>
+    `;
+    
+    container.appendChild(messageDiv);
+    container.scrollTop = container.scrollHeight;
+}
+
+// Add typing indicator
+function addTypingIndicator(containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return null;
+
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-message ai-message typing-message';
+    typingDiv.innerHTML = `
+        <div class="message-avatar">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="message-content">
+            <div class="typing-indicator">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    `;
+    
+    container.appendChild(typingDiv);
+    container.scrollTop = container.scrollHeight;
+    return typingDiv;
+}
+
+// Send chat message (results page chatbot)
+async function sendChatMessage() {
+    const input = document.getElementById('chat-input');
+    if (!input) return;
+    
+    const message = input.value.trim();
+    if (!message) return;
+    
+    input.value = '';
+    addChatMessage('chat-messages', message, true);
+    
+    // Add to history
+    chatHistory.push({ role: 'user', content: message });
+    
+    const typingIndicator = addTypingIndicator('chat-messages');
+    
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: message,
+                context: {
+                    analysisResult: currentAnalysisResult,
+                    history: chatHistory.slice(-6)
+                }
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (typingIndicator) typingIndicator.remove();
+        
+        if (data.success && data.reply) {
+            addChatMessage('chat-messages', data.reply, false);
+            chatHistory.push({ role: 'assistant', content: data.reply });
+        } else {
+            addChatMessage('chat-messages', 'Sorry, I couldn\'t process that. Please try again.', false);
+        }
+    } catch (error) {
+        if (typingIndicator) typingIndicator.remove();
+        addChatMessage('chat-messages', 'Connection error. Please check your internet and try again.', false);
+    }
+}
+
+// Send floating chat message
+async function sendFloatingChatMessage() {
+    const input = document.getElementById('floating-chat-input');
+    if (!input) return;
+    
+    const message = input.value.trim();
+    if (!message) return;
+    
+    input.value = '';
+    addChatMessage('floating-chat-messages', message, true);
+    
+    floatingChatHistory.push({ role: 'user', content: message });
+    
+    const typingIndicator = addTypingIndicator('floating-chat-messages');
+    
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: message,
+                context: {
+                    analysisResult: currentAnalysisResult,
+                    history: floatingChatHistory.slice(-6)
+                }
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (typingIndicator) typingIndicator.remove();
+        
+        if (data.success && data.reply) {
+            addChatMessage('floating-chat-messages', data.reply, false);
+            floatingChatHistory.push({ role: 'assistant', content: data.reply });
+        } else {
+            addChatMessage('floating-chat-messages', 'Sorry, I couldn\'t process that. Please try again.', false);
+        }
+    } catch (error) {
+        if (typingIndicator) typingIndicator.remove();
+        addChatMessage('floating-chat-messages', 'Connection error. Please check your internet and try again.', false);
+    }
+}
+
+// Suggestion chips
+function askSuggestion(text) {
+    const input = document.getElementById('chat-input');
+    if (input) {
+        input.value = text;
+        sendChatMessage();
+    }
+}
+
+function askFloatingSuggestion(text) {
+    const input = document.getElementById('floating-chat-input');
+    if (input) {
+        input.value = text;
+        sendFloatingChatMessage();
+    }
+}
+
+// Override displayResults to store analysis result
+(function() {
+    const originalFn = window.displayResults || displayResults;
+    if (typeof originalFn === 'function') {
+        window.displayResults = function(result) {
+            currentAnalysisResult = result;
+            chatHistory = []; // Reset chat history for new analysis
+            return originalFn.apply(this, arguments);
+        };
+    }
+})();

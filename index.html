@@ -874,13 +874,45 @@
                     </div>
                 </div>
 
-                <!-- Causes & Recommendations -->
+                <!-- AI Assistant Chat -->
+                <div class="card glass-card ai-chat-card" data-aos="fade-up">
+                    <div class="card-header">
+                        <div class="card-icon ai-icon"><i class="fas fa-robot"></i></div>
+                        <div class="card-title-group">
+                            <h2>AI Assistant</h2>
+                            <span class="ai-status"><span class="status-dot"></span>Online</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="chat-messages" class="chat-messages">
+                            <div class="chat-message ai-message">
+                                <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                                <div class="message-content">
+                                    <p>Hi! 👋 I've analyzed your workload. Ask me anything about your results, study tips, or how to reduce burnout!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-suggestions">
+                            <button class="suggestion-chip" onclick="askSuggestion('How can I improve my score?')">How can I improve?</button>
+                            <button class="suggestion-chip" onclick="askSuggestion('Give me study tips')">Study tips</button>
+                            <button class="suggestion-chip" onclick="askSuggestion('How to manage stress?')">Manage stress</button>
+                        </div>
+                        <div class="chat-input-container">
+                            <input type="text" id="chat-input" class="chat-input" placeholder="Ask me anything..." onkeypress="handleChatKeypress(event)">
+                            <button class="chat-send-btn" onclick="sendChatMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Insights -->
                 <div class="results-grid">
                     <div class="card glass-card" data-aos="fade-up">
                         <div class="card-header">
                             <div class="card-icon causes-icon"><i class="fas fa-exclamation-triangle"></i></div>
                             <div class="card-title-group">
-                                <h2>Main Causes</h2>
+                                <h2>Key Factors</h2>
                             </div>
                         </div>
                         <div class="card-body">
@@ -892,7 +924,7 @@
                         <div class="card-header">
                             <div class="card-icon recommendations-icon"><i class="fas fa-lightbulb"></i></div>
                             <div class="card-title-group">
-                                <h2>Recommendations</h2>
+                                <h2>Quick Tips</h2>
                             </div>
                         </div>
                         <div class="card-body">
@@ -908,6 +940,52 @@
             </section>
         </div>
     </main>
+
+    <!-- Floating Chatbot -->
+    <div id="floating-chatbot" class="floating-chatbot">
+        <button class="chatbot-toggle" onclick="toggleFloatingChat()">
+            <i class="fas fa-comment-dots chatbot-icon-open"></i>
+            <i class="fas fa-times chatbot-icon-close"></i>
+            <span class="chatbot-pulse"></span>
+        </button>
+        <div class="chatbot-window">
+            <div class="chatbot-header">
+                <div class="chatbot-title">
+                    <div class="chatbot-avatar"><i class="fas fa-robot"></i></div>
+                    <div>
+                        <h4>LoadCheck AI</h4>
+                        <span class="chatbot-status"><span class="status-dot"></span>Always here to help</span>
+                    </div>
+                </div>
+                <button class="chatbot-close" onclick="toggleFloatingChat()">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+            <div id="floating-chat-messages" class="chatbot-messages">
+                <div class="chat-message ai-message">
+                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="message-content">
+                        <p>Hey! 👋 I'm your LoadCheck assistant. I can help you:</p>
+                        <ul style="margin: 8px 0 0 16px; font-size: 0.9em;">
+                            <li>Understand how to use LoadCheck</li>
+                            <li>Get study and time management tips</li>
+                            <li>Learn about burnout prevention</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="chatbot-suggestions">
+                <button class="suggestion-chip" onclick="askFloatingSuggestion('How does LoadCheck work?')">How it works</button>
+                <button class="suggestion-chip" onclick="askFloatingSuggestion('Give me productivity tips')">Productivity tips</button>
+            </div>
+            <div class="chatbot-input-container">
+                <input type="text" id="floating-chat-input" class="chatbot-input" placeholder="Ask anything..." onkeypress="handleFloatingChatKeypress(event)">
+                <button class="chatbot-send-btn" onclick="sendFloatingChatMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Loading Overlay -->
     <div id="loading" class="loading-overlay hidden">
