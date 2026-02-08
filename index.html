@@ -812,7 +812,8 @@
                             </div>
                         </div>
                         <div class="score-label" id="sleep-label">Calculating...</div>
-                        <div class="score-hours" id="sleep-hours-display"><i class="fas fa-clock"></i> -- hours/night</div>
+                        <div class="score-hours" id="sleep-hours-display"><i class="fas fa-clock"></i> -- hours/night
+                        </div>
                     </div>
 
                     <!-- Stress/Risk Score -->
@@ -848,7 +849,8 @@
                                     </filter>
                                 </defs>
                                 <circle class="score-bg" cx="100" cy="100" r="75" />
-                                <circle class="score-progress risk-progress" id="risk-progress" cx="100" cy="100" r="75" filter="url(#glow)" />
+                                <circle class="score-progress risk-progress" id="risk-progress" cx="100" cy="100" r="75"
+                                    filter="url(#glow)" />
                             </svg>
                             <div class="score-center">
                                 <span class="score-emoji" id="risk-emoji">😊</span>
@@ -931,17 +933,22 @@
                             <div class="chat-message ai-message">
                                 <div class="message-avatar"><i class="fas fa-robot"></i></div>
                                 <div class="message-content">
-                                    <p>Hi! 👋 I've analyzed your workload. Ask me anything about your results, study tips, or how to reduce burnout!</p>
+                                    <p>Hi! 👋 I've analyzed your workload. Ask me anything about your results, study
+                                        tips, or how to reduce burnout!</p>
                                 </div>
                             </div>
                         </div>
                         <div class="chat-suggestions">
-                            <button class="suggestion-chip" onclick="askSuggestion('How can I improve my score?')">How can I improve?</button>
-                            <button class="suggestion-chip" onclick="askSuggestion('Give me study tips')">Study tips</button>
-                            <button class="suggestion-chip" onclick="askSuggestion('How to manage stress?')">Manage stress</button>
+                            <button class="suggestion-chip" onclick="askSuggestion('How can I improve my score?')">How
+                                can I improve?</button>
+                            <button class="suggestion-chip" onclick="askSuggestion('Give me study tips')">Study
+                                tips</button>
+                            <button class="suggestion-chip" onclick="askSuggestion('How to manage stress?')">Manage
+                                stress</button>
                         </div>
                         <div class="chat-input-container">
-                            <input type="text" id="chat-input" class="chat-input" placeholder="Ask me anything..." onkeypress="handleChatKeypress(event)">
+                            <input type="text" id="chat-input" class="chat-input" placeholder="Ask me anything..."
+                                onkeypress="handleChatKeypress(event)">
                             <button class="chat-send-btn" onclick="sendChatMessage()">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
@@ -1018,11 +1025,14 @@
                 </div>
             </div>
             <div class="chatbot-suggestions">
-                <button class="suggestion-chip" onclick="askFloatingSuggestion('How does LoadCheck work?')">How it works</button>
-                <button class="suggestion-chip" onclick="askFloatingSuggestion('Give me productivity tips')">Productivity tips</button>
+                <button class="suggestion-chip" onclick="askFloatingSuggestion('How does LoadCheck work?')">How it
+                    works</button>
+                <button class="suggestion-chip"
+                    onclick="askFloatingSuggestion('Give me productivity tips')">Productivity tips</button>
             </div>
             <div class="chatbot-input-container">
-                <input type="text" id="floating-chat-input" class="chatbot-input" placeholder="Ask anything..." onkeypress="handleFloatingChatKeypress(event)">
+                <input type="text" id="floating-chat-input" class="chatbot-input" placeholder="Ask anything..."
+                    onkeypress="handleFloatingChatKeypress(event)">
                 <button class="chatbot-send-btn" onclick="sendFloatingChatMessage()">
                     <i class="fas fa-paper-plane"></i>
                 </button>
